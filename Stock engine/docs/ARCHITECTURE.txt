@@ -1,0 +1,260 @@
+PROJECT ARCHITECTURE & FLOW DIAGRAM
+═════════════════════════════════════════════════════════════════════════════
+
+1. SYSTEM ARCHITECTURE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+                              ┌─────────────────┐
+                              │   app.py        │
+                              │  (ORCHESTRATOR) │
+                              └────────┬────────┘
+                                       │
+                 ┌─────────────────────┼─────────────────────┐
+                 │                     │                     │
+                 ▼                     ▼                     ▼
+         ┌──────────────┐      ┌──────────────┐      ┌──────────────┐
+         │   Scanner    │      │   data_loader│      │ Predictions  │
+         │   (News)     │      │   2 (Prices) │      │  (Accuracy)  │
+         └──────┬───────┘      └──────┬───────┘      └──────┬───────┘
+                │                     │                     │
+                ▼                     ▼                     ▼
+         ┌──────────────┐      ┌──────────────┐      ┌──────────────┐
+         │  Sentiment   │      │ yfinance/    │      │   Analysis   │
+         │   (FinBERT)  │      │ NSE API      │      │  (Statistics)│
+         └──────┬───────┘      └──────────────┘      └──────────────┘
+                │
+                ▼
+         ┌──────────────────────┐
+         │  TIME WINDOW CHECK   │
+         │  (4pm-9am IST)       │
+         └──────────────────────┘
+                │
+           ┌────┴────┐
+           ▼         ▼
+        INSIDE    OUTSIDE
+        VALID     VALID
+       WINDOW    WINDOW
+        (✓)       (!)
+           
+2. DATA FLOW
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PIPELINE EXECUTION:
+
+    START (app.py)
+        │
+        ▼
+    ┌─────────────────────────────┐
+    │ 1. TIME WINDOW VALIDATION   │
+    │    Check if 4pm-9am (IST)   │
+    └──────────┬──────────────────┘
+               │
+               ▼
+    ┌─────────────────────────────┐
+    │ 2. NEWS FETCHING(Scanner.py)│
+    │    For all Nifty 50 stocks  │
+    │    + Sentiment Analysis     │
+    └──────────┬──────────────────┘
+               │
+               ▼
+    ┌─────────────────────────────┐
+    │ 3. PRICE FETCHING           │
+    │    (data_loader2.py)        │
+    │    Yesterday's OHLCV        │
+    └──────────┬──────────────────┘
+               │
+               ▼
+    ┌─────────────────────────────┐
+    │ 4. MERGE & COMPARE          │
+    │    Sentiment vs Actual Price│
+    │    Calculate Accuracy       │
+    └──────────┬──────────────────┘
+               │
+               ▼
+    ┌─────────────────────────────┐
+    │ 5. REPORT GENERATION        │
+    │    (Predictions.py)         │
+    │    Save CSV outputs         │
+    └──────────┬──────────────────┘
+               │
+               ▼
+            DONE ✓
+
+
+3. FILE DEPENDENCIES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    app.py (Main)
+        ├─ imports Scanner.py
+        │   ├─ imports Sentiment.py
+        │   │   ├─ GoogleNews API
+        │   │   ├─ FinBERT model
+        │   │   └─ pytz (time)
+        │   └─ nsepython (NSE API)
+        │
+        ├─ imports data_loader2.py
+        │   ├─ yfinance
+        │   ├─ nsepython
+        │   └─ pytz (time)
+        │
+        └─ imports Predictions.py
+            └─ pandas (analysis)
+
+
+4. OUTPUT STRUCTURE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    INPUTS:
+    ├─ NSE API (Nifty 50 stocks)
+    ├─ Yahoo Finance (historical prices)
+    └─ Google News (latest news)
+            │
+            ▼
+    PROCESSING:
+    ├─ Time window validation
+    ├─ News collection & filtering
+    ├─ FinBERT sentiment analysis
+    ├─ Price movement calculation
+    └─ Accuracy comparison
+            │
+            ▼
+    OUTPUTS:
+    ├─ daily_prices.csv
+    │  └─ Stock prices + movement direction
+    ├─ nifty_sentiment_results.csv
+    │  └─ Sentiment scores + direction
+    └─ prediction_report.csv
+       └─ Final accuracy metrics
+
+
+5. TIME WINDOW CONCEPT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    Indian Stock Market Timeline (IST - Asia/Kolkata):
+    
+    ↓ Previous Day
+    │
+    3:30 PM  Market Close
+         │
+    ┌────┴─────────────────────────┐
+    │                               │
+    4:00 PM  NEWS COLLECTION START  │ ← After-market hours
+    │        (News breaks)          │
+    │        (Research begins)      │
+    │        (Analysts comment)     │
+    │                               │
+    ↓ Next Day                      │
+    │                               │
+    12:00 AM (Midnight)            │
+    │        (Overnight news)       │
+    │        (Continued coverage)   │
+    │                               │
+         └────┬─────────────────────┘
+              │ VALID WINDOW
+              │ (12 hours of news)
+              │
+    9:00 AM  MARKET OPENS          │
+         │    (Trading starts)      │ ← Traders act on news
+         │    (Prediction valid)    │
+         │
+    ✓ PREDICTION WINDOW ENDS
+    
+    Why 4pm-9am?
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    • Maximum news availability
+    • All overnight developments captured
+    • Traders make decisions at market open
+    • Predictions can be validated same day
+
+
+6. DECISION FLOW
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    Current Time?
+         │
+    ┌────┴─────────────────────────┐
+    │                               │
+    ▼ 12:00-9:00 AM                ▼ 9:00-16:00 (4pm)
+    (Valid Window)                 (Between)
+    │                               │
+    FETCH NEWS                      SKIP
+    ├─ Collect all articles        │
+    ├─ Analyze sentiment            │
+    ├─ Compare with prices         │
+    ├─ Generate predictions        │
+    └─ Calculate accuracy          │
+                                   │
+                        ┌──────────┘
+                        │
+                    ▼ 16:00-24:00
+                    (Evening)
+                    │
+                    ├─ Between windows
+                    ├─ No data collection
+                    └─ Wait until midnight
+
+
+7. USER INTERACTION PATHS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Path A: Interactive Mode
+├─ python app.py
+├─ Choose option from menu
+├─ System validates and executes
+└─ Results displayed + saved
+
+Path B: Quick Command
+├─ python app.py run
+├─ Full pipeline executes
+└─ Results saved to CSV
+
+Path C: Testing Mode
+├─ python app.py sample  (10 companies)
+├─ Quick validation
+└─ Results saved to CSV
+
+Path D: Automated Scheduling
+├─ python app.py schedule
+├─ Runs at midnight & 9am daily
+└─ Results saved to CSV
+
+
+8. EXAMPLE EXECUTION TIMELINE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Scenario: Running on Monday 8:00 AM (during valid window)
+
+    8:00 AM - User runs: python app.py
+    
+    8:00:05 AM - System starts
+    ├─ Time Check: ✓ Within valid window
+    ├─ Status: ACTIVE - News collection window open
+    
+    8:00:10 AM - Scanner starts
+    ├─ [1/50] RELIANCE... searching news... found 8 articles
+    ├─   Sentiment Score: 0.156 (+) → BULLISH
+    ├─ [2/50] TCS... searching news... found 5 articles
+    ├─   Sentiment Score: -0.089 (-) → BEARISH
+    ├─ [3/50-50/50] ... (rest of companies)
+    
+    8:02:30 AM - News fetching complete
+    ├─ Found 32 significant signals from 50 stocks
+    
+    8:02:35 AM - Price fetching starts
+    ├─ Downloading price data from yfinance...
+    ├─ 50/50 stocks processed ✓
+    
+    8:02:45 AM - Comparison & analysis
+    ├─ Merging sentiment with prices
+    ├─ Calculating predictions vs actuals
+    
+    8:02:50 AM - Report generation
+    ├─ Accuracy: 65.42% (correct: 21/32)
+    ├─ ✓ daily_prices.csv saved
+    ├─ ✓ nifty_sentiment_results.csv saved
+    ├─ ✓ prediction_report.csv saved
+    
+    8:02:55 AM - DONE ✓
+
+
+═════════════════════════════════════════════════════════════════════════════

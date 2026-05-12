@@ -1,0 +1,142 @@
+
+######################################################################
+# NIFTY 50 STOCK PRICE PREDICTION ENGINE
+# Continuous score output in range [-1, 1]
+######################################################################
+
+----------------------------------------------------------------------
+RUNNING SENTIMENT COLLECTION
+----------------------------------------------------------------------
+
+Within valid news window (current time: 08:56 IST)
+============================================================
+Connecting to NSE for NIFTY 50 list
+
+Total Nifty 50 stocks available: 50
+Scanning ALL 50 Nifty 50 companies...
+Fetching news from 23/04 16:00 to 24/04 09:00
+============================================================
+[1/50] Searching: HDFCBANK... No News Found
+[2/50] Searching: ICICIBANK... No News Found
+[3/50] Searching: RELIANCE... No News Found
+[4/50] Searching: DRREDDY... No News Found
+[5/50] Searching: TRENT... No News Found
+[6/50] Searching: INFY... No News Found
+[7/50] Searching: JIOFIN... No News Found
+[8/50] Searching: SBIN... No News Found
+[9/50] Searching: M&M... No News Found
+[10/50] Searching: BHARTIARTL... No News Found
+[11/50] Searching: HCLTECH... No News Found
+[12/50] Searching: KOTAKBANK... No News Found
+[13/50] Searching: LT... No News Found
+[14/50] Searching: ETERNAL... No News Found
+[15/50] Searching: BAJFINANCE... No News Found
+[16/50] Searching: AXISBANK... No News Found
+[17/50] Searching: SBILIFE... No News Found
+[18/50] Searching: MARUTI... No News Found
+[19/50] Searching: CIPLA... No News Found
+[20/50] Searching: BEL... No News Found
+[21/50] Searching: ADANIENT... No News Found
+[22/50] Searching: TCS... No News Found
+[23/50] Searching: TECHM... No News Found
+[24/50] Searching: SUNPHARMA... No News Found
+[25/50] Searching: HINDUNILVR... No News Found
+[26/50] Searching: SHRIRAMFIN... No News Found
+[27/50] Searching: INDIGO... No News Found
+[28/50] Searching: HINDALCO... No News Found
+[29/50] Searching: BAJAJ-AUTO... No News Found
+[30/50] Searching: NESTLEIND... No News Found
+[31/50] Searching: WIPRO... No News Found
+[32/50] Searching: TATASTEEL... No News Found
+[33/50] Searching: TMPV... No News Found
+[34/50] Searching: COALINDIA... No News Found
+[35/50] Searching: ONGC... No News Found
+[36/50] Searching: ADANIPORTS... No News Found
+[37/50] Searching: NTPC... No News Found
+[38/50] Searching: ASIANPAINT... No News Found
+[39/50] Searching: EICHERMOT... No News Found
+[40/50] Searching: ITC... No News Found
+[41/50] Searching: TITAN... No News Found
+[42/50] Searching: ULTRACEMCO... No News Found
+[43/50] Searching: HDFCLIFE... No News Found
+[44/50] Searching: GRASIM... No News Found
+[45/50] Searching: APOLLOHOSP... No News Found
+[46/50] Searching: POWERGRID... No News Found
+[47/50] Searching: JSWSTEEL... No News Found
+[48/50] Searching: TATACONSUM... No News Found
+[49/50] Searching: BAJAJFINSV... No News Found
+[50/50] Searching: MAXHEALTH... No News Found
+
+============================================================
+No sentiment signals found in this batch.
+
+######################################################################
+# NIFTY 50 STOCK PRICE PREDICTION ENGINE
+# Continuous score output in range [-1, 1]
+######################################################################
+
+----------------------------------------------------------------------
+RUNNING SENTIMENT COLLECTION
+----------------------------------------------------------------------
+
+Within valid news window (current time: 08:56 IST)
+============================================================
+Connecting to NSE for NIFTY 50 list
+
+Total Nifty 50 stocks available: 50
+Scanning ALL 50 Nifty 50 companies...
+Fetching news from 28/04 16:00 to 29/04 09:00
+============================================================
+[1/50] Searching: RELIANCE... No News Found
+[2/50] Searching: SUNPHARMA... No News Found
+[3/50] Searching: HDFCBANK... No News Found
+[4/50] Searching: ETERNAL... No News Found
+[5/50] Searching: ICICIBANK... No News Found
+[6/50] Searching: BHARTIARTL... No News Found
+[7/50] Searching: ONGC... No News Found
+[8/50] Searching: INFY... No News Found
+[9/50] Searching: AXISBANK... No News Found
+[10/50] Searching: COALINDIA... No News Found
+[11/50] Searching: SBIN... No News Found
+[12/50] Searching: TCS... No News Found
+[13/50] Searching: MARUTI... No News Found
+[14/50] Searching: ADANIENT... No News Found
+[15/50] Searching: HINDALCO... No News Found
+[16/50] Searching: M&M... No News Found
+[17/50] Searching: HCLTECH... No News Found
+[18/50] Searching: TATASTEEL... No News Found
+[19/50] Searching: LT... No News Found
+[20/50] Searching: BAJFINANCE... No News Found
+[21/50] Searching: SHRIRAMFIN... No News Found
+[22/50] Searching: ULTRACEMCO... No News Found
+[23/50] Searching: NESTLEIND... No News Found
+[24/50] Searching: INDIGO... No News Found
+[25/50] Searching: JIOFIN... No News Found
+[26/50] Searching: KOTAKBANK... No News Found
+[27/50] Searching: WIPRO... No News Found
+[28/50] Searching: BEL... No News Found
+[29/50] Searching: GRASIM... No News Found
+[30/50] Searching: ADANIPORTS... No News Found
+[31/50] Searching: EICHERMOT... No News Found
+[32/50] Searching: ITC... No News Found
+[33/50] Searching: TRENT... No News Found
+[34/50] Searching: HINDUNILVR... No News Found
+[35/50] Searching: HDFCLIFE... No News Found
+[36/50] Searching: NTPC... No News Found
+[37/50] Searching: DRREDDY... No News Found
+[38/50] Searching: POWERGRID... No News Found
+[39/50] Searching: TECHM... No News Found
+[40/50] Searching: TITAN... No News Found
+[41/50] Searching: APOLLOHOSP... No News Found
+[42/50] Searching: SBILIFE... No News Found
+[43/50] Searching: TMPV... No News Found
+[44/50] Searching: BAJAJFINSV... No News Found
+[45/50] Searching: BAJAJ-AUTO... No News Found
+[46/50] Searching: JSWSTEEL... No News Found
+[47/50] Searching: CIPLA... No News Found
+[48/50] Searching: TATACONSUM... No News Found
+[49/50] Searching: ASIANPAINT... No News Found
+[50/50] Searching: MAXHEALTH... No News Found
+
+============================================================
+No sentiment signals found in this batch.
