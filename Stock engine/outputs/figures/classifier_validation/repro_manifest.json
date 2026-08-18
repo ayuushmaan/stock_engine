@@ -1,0 +1,26 @@
+{
+  "notebook": "01_classifier_validation",
+  "run_timestamp": "2026-06-24T00:00:49.678671",
+  "dataset_hash": "9e21565e030a1e13",
+  "dataset_rows": 1397568,
+  "random_seed": 42,
+  "python_version": "3.11.7",
+  "pandas_version": "3.0.3",
+  "numpy_version": "2.4.6",
+  "summary": {
+    "total_articles": 1397568,
+    "pct_labeled": 33.42,
+    "pct_high_sponsored": 67.83,
+    "pct_high_organic": 28.22,
+    "pct_uncertain": 3.96,
+    "tone_separation_delta": 3.0654,
+    "classifier_is_circular": false,
+    "ablation_collapsed": false,
+    "auc_full": 1.0,
+    "auc_no_rules": 1.0,
+    "auc_text_only": 0.9704,
+    "is_pr_wire_importance_pct": 6.13,
+    "rule_features_importance_pct": 6.35,
+    "source_tier_importance_pct": 91.67
+  }
+}

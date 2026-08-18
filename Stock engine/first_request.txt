@@ -1,0 +1,96 @@
+<USER_REQUEST>
+You are a senior quantitative researcher helping me build a rigorous,
+publishable research project on Indian stock markets. The core idea is
+fresh and under-researched: testing whether news SOURCE CREDIBILITY
+(organic vs sponsored) and NEWS TIMING (market-closed vs market-open
+window) independently and jointly predict NIFTY 50 stock returns.
+
+This is a RESEARCH PROJECT, not a trading system. The goal is to test
+two hypotheses with clean methodology and produce results I can write
+up.
+
+---
+
+## The Two Hypotheses
+
+H1 — Source Credibility Signal:
+Sponsored/PR news is fundamentally different from organic editorial
+news — not because websites label it, but because SPONSORED CONTENT
+BEHAVES DIFFERENTLY IN THE TEXT. It is systematically more positive,
+uses promotional language, avoids specific risk factors, and lacks a
+critical voice. Like spam vs ham in email classification. A model
+trained to detect this should show that organic news carries genuine
+sentiment signal for future returns, while sponsored news carries
+noise or manipulative signal.
+
+H2 — Temporal Information Asymmetry:
+News arriving during the closed-market window (3:30 PM IST to
+9:15 AM IST next day) predicts next-day opening returns more strongly
+than news during market hours (9:15 AM to 3:30 PM IST), because
+closed-window news has not yet been absorbed into prices. The market
+needs the overnight gap to process it.
+
+The interaction of H1 × H2 is the most interesting cell: organic
+news arriving during the closed window should have the highest
+predictive alpha. Sponsored news during any window should have low or
+negative alpha.
+
+---
+
+## Data Strategy (free only, must complete without paid APIs)
+
+PRIMARY SOURCE — GDELT 2.0 via Google BigQuery free tier:
+- GDELT already has tone scores, source URLs, timestamps for all
+  major Indian news outlets from 2020
+- 1 TB/month free query limit is sufficient
+- This is our Phase 1 signal — use GDELT TONE as a proxy for
+  sentiment across the full date range
+- We do NOT need to scrape article t
+<truncated 14300 bytes>
+iteoff", "insolvency"
+]
+
+---
+
+## Coding Standards
+
+- Every pipeline script must run standalone:
+  python pipeline/01_fetch_prices.py --dry-run
+- All timestamps must be timezone-aware IST (Asia/Kolkata) always
+- Use parquet throughout, never CSV for intermediate data
+- No global state. Each script: read inputs → process → write outputs
+- Log with timestamps: logging.basicConfig(level=logging.INFO,
+  format='%(asctime)s %(levelname)s %(message)s')
+- Use pathlib.Path for all file paths, never hardcode strings
+- Seed all random operations: numpy seed 42, python random seed 42
+- Save a repro_manifest.json after each research notebook with:
+  dataset hash, date range, random seed, library versions
+
+---
+
+## What to build RIGHT NOW (in order):
+
+1. config/settings.py — complete, with all constants above
+2. config/nifty50_tickers.py — full 50 tickers with company names
+   and 2-3 search keywords each (e.g. RELIANCE: ["Reliance Industries",
+   "RIL", "Mukesh Ambani"])
+3. config/source_tiers.py — domain → tier mapping for 30+ Indian
+   financial news domains
+4. pipeline/01_fetch_prices.py — complete and runnable
+5. pipeline/02_fetch_gdelt.py — with the exact BigQuery SQL query
+
+Start with 1 through 3 now. Generate complete working code.
+Please ensure and check till what process we have done this 
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-06-23T21:00:38+05:30.
+
+The user's current state is as follows:
+Active Document: c:\Users\ayush\OneDrive\Desktop\Theatre\Guido\Projects\Stock engine\requirements.txt (LANGUAGE_UNSPECIFIED)
+Cursor is on line: 1
+Other open documents:
+- c:\Users\ayush\OneDrive\Desktop\Theatre\Guido\Projects\Stock engine\requirements.txt (LANGUAGE_UNSPECIFIED)
+</ADDITIONAL_METADATA>
+<USER_SETTINGS_CHANGE>
+The user changed setting `Model Selection` from None to Gemini 3.5 Flash (Medium). No need to comment on this change if the user doesn't ask about it. If reporting what model you are, please use a human readable name instead of the exact string.
+</USER_SETTINGS_CHANGE>

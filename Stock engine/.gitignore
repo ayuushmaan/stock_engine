@@ -1,0 +1,242 @@
+# ==============================================================================
+# Git Ignore Configuration for Quant Finance / Stock Engine Research
+# ==============================================================================
+
+# --- Python & Bytecode ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyd
+*.dll
+*.dylib
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# --- Virtual Environments ---
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.conda/
+.poetry/
+
+# --- Jupyter Notebooks & Jupytext ---
+.ipynb_checkpoints/
+*-checkpoint.ipynb
+.jupyter/
+.jupytext_cache/
+*.nbconvert/
+
+# --- Testing, Linting & Type Checking ---
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.pytype/
+.hypothesis/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+
+# --- Data Directories & Heavy Datasets ---
+# Ignore dataset contents across top-level and nested research directories
+data/raw/*
+data/processed/*
+data/final/*
+data/interim/*
+data/cache/*
+data/temp/*
+**/data/raw/*
+**/data/processed/*
+**/data/final/*
+**/data/interim/*
+**/data/cache/*
+**/data/temp/*
+
+# Allow directory structure tracking
+!data/**/.gitkeep
+!data/**/README.md
+!**/data/**/.gitkeep
+!**/data/**/README.md
+
+# Big data, database and archive formats
+*.parquet
+*.feather
+*.arrow
+*.orc
+*.avro
+*.h5
+*.hdf5
+*.nc
+*.db
+*.sqlite
+*.sqlite3
+*.duckdb
+*.csv.gz
+*.tar.gz
+*.tgz
+*.zip
+*.7z
+*.rar
+*.tar
+*.gz
+*.bz2
+*.xz
+*.zst
+archive*/
+archive*.zip
+
+# --- Machine Learning Models, Weights & Large Artifacts ---
+# Ignore model weight directories, checkpoints and binary dumps
+models/*/
+models/checkpoints/
+models/weights/
+models/qwen*/
+models/hf_*/
+checkpoints/
+saved_models/
+weights/
+
+# Model binaries and serialization formats
+*.safetensors
+*.safetensors.index.json
+*.bin
+*.bin.index.json
+*.pt
+*.pth
+*.onnx
+*.pkl
+*.joblib
+*.ckpt
+*.tflite
+*.keras
+*.gguf
+*.msgpack
+
+# Retain Python code and documentation in models directory
+!models/*.py
+!models/**/*.py
+!models/**/.gitkeep
+!models/**/README.md
+
+# --- Experiment Tracking, Caches & Logs ---
+logs/
+*.log
+*.log.*
+wandb/
+mlruns/
+.neptune/
+lightning_logs/
+tensorboard/
+runs/
+.cache/
+huggingface/
+transformers_cache/
+torch_cache/
+.triton/
+.agents/
+
+# --- Scratch Work & Temporary Directories ---
+scratch/*
+!scratch/.gitkeep
+!scratch/README.md
+tmp/
+temp/
+.scratch/
+.tmp/
+
+# --- Outputs & Reports ---
+# Ignore intermediate/large generated exports if applicable
+outputs/latest/*.csv
+outputs/latest/*.parquet
+outputs/history/*.csv
+outputs/history/*.parquet
+outputs/cache/
+outputs/temp/
+outputs/runs/
+!outputs/**/.gitkeep
+!outputs/**/README.md
+
+# --- Environment & Secret Credentials ---
+.env
+.env.*
+!.env.example
+!.env.template
+*.pem
+*.key
+*.crt
+*.pfx
+*.p12
+*.id_rsa
+id_rsa
+id_ed25519
+gcp_service_account*.json
+*service_account*.json
+credentials*.json
+client_secret*.json
+secrets*.json
+secrets*.yaml
+secrets*.yml
+secrets*.toml
+config.local.py
+settings_local.py
+token.json
+token.pickle
+*.token
+
+# --- Operating System & Editor Artifacts ---
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+ehthumbs.db
+Thumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.directory
+
+# Editors & IDEs
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.swp
+*.swo
+*.swn
+.cursor/
+.zed/
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
