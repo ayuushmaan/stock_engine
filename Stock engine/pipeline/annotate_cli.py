@@ -1,9 +1,4 @@
-r"""Pipeline Interactive Tool — Rapid Hand-Labeling CLI for Phase 0.
-
-An interactive console tool to make labeling 1,000 articles fast, seamless,
-and frictionless. Automatically tracks progress, opens URLs in your default
-browser, accepts single-key inputs, auto-saves on every action, and resumes
-where you left off.
+r"""Interactive CLI for manual verification and labeling of sampled news articles.
 
 Features:
     - Auto-opens URL in browser (toggleable)
@@ -11,7 +6,7 @@ Features:
     - Fast reason templates or custom input
     - Jump to any sample ID / Go back to fix previous mistakes
     - Real-time progress stats & class breakdown
-    - Zero data loss (saves CSV on every annotation)
+    - Saves CSV on every annotation
 
 Usage:
     python pipeline/annotate_cli.py

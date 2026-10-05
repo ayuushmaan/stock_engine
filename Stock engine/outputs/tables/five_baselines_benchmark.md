@@ -8,8 +8,7 @@
 | **4. Credibility Only** | `+0.0041` | `0.116` | `+0.52` | `0.6006` | `0.6006` | `+1.8%` | `0.51` | `-1.0%` |
 | **5. Full Proposed Signal** | `+0.0042` | `0.115` | `+0.53` | `0.5980` | `0.6006` | `+3.8%` | `1.19` | `-1.1%` |
 
-> [!NOTE]
-> **Statistical Rigor Criteria**:
-> - **HAC t-stat**: Newey-West adjusted for serial autocovariance up to 5 trading days.
-> - **FDR p-val**: Benjamini-Hochberg false discovery rate adjusted across all tested signal families.
-> - **L/S Spread**: Top quintile (Q5) minus bottom quintile (Q1) daily rebalanced long-short spread.
+**Notes on Methodology**:
+- **HAC t-stat**: Newey-West adjusted for serial autocovariance up to 5 trading days.
+- **FDR p-val**: Benjamini-Hochberg false discovery rate adjusted across tested signal families.
+- **L/S Spread**: Top quintile (Q5) minus bottom quintile (Q1) daily rebalanced long-short spread.

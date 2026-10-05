@@ -1,4 +1,4 @@
-"""Core Mathematical Sponsored News Scoring & Segregation Engine (HHEE).
+"""Sponsored News Scoring Engine (HHEE).
 
 Implements the Hierarchical Hybrid Evidence Engine:
   - Layer 0: Deterministic Invariant Gates (PR Wires, Explicit Sponsored URLs, Disclosures)

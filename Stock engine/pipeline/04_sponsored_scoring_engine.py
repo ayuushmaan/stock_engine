@@ -1,4 +1,4 @@
-"""Pipeline Step 4 — Mathematical Sponsored News Scoring & Segregation Engine.
+"""Pipeline Step 4 — Sponsored News Scoring Engine.
 
 Outputs:
   data/processed/sponsored_scores.parquet  — all articles scored with class & attribution

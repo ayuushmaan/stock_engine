@@ -1,4 +1,4 @@
-"""Institutional Factor Portfolio Backtesting Engine with Friction Modeling."""
+"""Factor Portfolio Backtesting Engine with Friction Modeling."""
 from __future__ import annotations
 
 import argparse

@@ -41,8 +41,7 @@ from config.settings import (
 
 logger = setup_logging()
 
-PROMPT_SYSTEM = """You are an elite financial journalist and forensic quantitative researcher evaluating Indian stock market news.
-Your mission is to classify whether a news article or press snippet about an Indian publicly traded company (NIFTY 50) is SPONSORED/PROMOTIONAL content or INDEPENDENT/ORGANIC financial journalism.
+PROMPT_SYSTEM = """Classify whether a financial news headline or snippet regarding an Indian public company (NIFTY 50) is SPONSORED/PROMOTIONAL content or INDEPENDENT/ORGANIC financial journalism.
 
 Categories:
 1. "SPONSORED" (Label 1):

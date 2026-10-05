@@ -1,9 +1,8 @@
 """Observable news morphology and structural feature extractors.
 
-All features are mathematically defined, deterministic functions of observable
-document attributes (URL path, domain, headline, token morphology, boilerplates).
-
-No financial intuition, sentiment 'vibes', or circular weak-label rules are used.
+All features are deterministic functions of observable document attributes
+(URL path, domain, headline, token morphology, and boilerplate structure).
+Features are computed without using sentiment scores or circular labeling heuristics.
 """
 
 from __future__ import annotations

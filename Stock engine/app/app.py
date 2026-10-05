@@ -1,4 +1,4 @@
-"""NIFTY 50 Quantitative Financial Intelligence & Signal Engine — Streamlit App."""
+"""NIFTY 50 Quantitative News Intelligence & Signal Research Dashboard."""
 
 from __future__ import annotations
 
@@ -13,12 +13,11 @@ import streamlit as st
 # Configure page
 st.set_page_config(
     page_title="NIFTY 50 News Intelligence & Signal Engine",
-    page_icon="📈",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
-# Custom CSS for clean institutional styling
+# Custom CSS for clean styling
 st.markdown("""
 <style>
     .metric-card {
@@ -52,28 +51,28 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.title("📈 NIFTY 50 Source Credibility & Temporal Asymmetry Engine")
-st.caption("Institutional Quantitative News Intelligence, Forensic Content Classification & Factor Alpha")
+st.title("NIFTY 50 Source Credibility & Temporal Asymmetry Engine")
+st.caption("Quantitative News Analysis, Content Classification & Factor Research")
 
 # Sidebar navigation
-st.sidebar.header("Engine Control Panel")
+st.sidebar.header("Navigation")
 app_mode = st.sidebar.radio(
-    "Select Intelligence View",
+    "Select View",
     [
-        "📊 Alpha Signal Screener",
-        "🔬 Forensic Article Inspector",
-        "📈 Factor Backtest & Strategy",
-        "🕸️ News Propagation DAG",
-        "🛡️ Rigor & Multi-Judge Validation",
+        "Signal Screener",
+        "Article Inspector",
+        "Factor Backtest",
+        "Propagation Network",
+        "Model Validation",
     ],
 )
 
 # -------------------------------------------------------------
 # TAB 1: Alpha Signal Screener
 # -------------------------------------------------------------
-if app_mode == "📊 Alpha Signal Screener":
+if app_mode == "Signal Screener":
     st.subheader("NIFTY 50 Cross-Sectional Alpha Signals")
-    st.markdown("Daily signals derived by combining **Source Credibility Filtering** with **Market Timing Asymmetry**.")
+    st.markdown("Daily signals derived by combining source credibility filtering with market timing asymmetry.")
 
     col1, col2, col3, col4 = st.columns(4)
     with col1:
@@ -85,7 +84,6 @@ if app_mode == "📊 Alpha Signal Screener":
     with col4:
         st.metric("Factor Sharpe (Net)", "1.48", "10 bps Slippage")
 
-    # Generate synthetic/sample screener table
     tickers = ["RELIANCE", "TCS", "HDFCBANK", "INFY", "ICICIBANK", "BHARTIARTL", "ITC", "LT", "SBIN", "TATAMOTORS"]
     np.random.seed(42)
     scores = np.random.uniform(-0.65, 0.75, len(tickers))
@@ -99,35 +97,34 @@ if app_mode == "📊 Alpha Signal Screener":
         "Organic Count": n_org,
         "Sponsored Count": n_spon,
         "Alpha Score": np.round(scores, 3),
-        "Signal Direction": ["🟢 BULLISH" if s > 0.10 else ("🔴 BEARISH" if s < -0.10 else "⚪ NEUTRAL") for s in scores],
+        "Signal Direction": ["BULLISH" if s > 0.10 else ("BEARISH" if s < -0.10 else "NEUTRAL") for s in scores],
         "Timing Window": np.random.choice(["CLOSED_PRE (1.5x)", "CLOSED_POST (1.5x)", "OPEN (1.0x)"], len(tickers)),
     }).sort_values("Alpha Score", ascending=False)
 
     st.dataframe(df_screener, use_container_width=True, hide_index=True)
 
 # -------------------------------------------------------------
-# TAB 2: Forensic Article Inspector
+# TAB 2: Article Inspector
 # -------------------------------------------------------------
-elif app_mode == "🔬 Forensic Article Inspector":
-    st.subheader("Forensic Article Content & Morphometrics Inspector")
-    st.markdown("Decomposes any news release through the 3-Layer **Hierarchical Hybrid Evidence Engine (HHEE)**.")
+elif app_mode == "Article Inspector":
+    st.subheader("Article Content & Morphometrics Inspector")
+    st.markdown("Decomposes news releases through the 3-Layer Hierarchical Hybrid Evidence Engine (HHEE).")
 
     from pipeline.scoring_engine import score_single_article
 
-    # Sample selection
     sample_choice = st.selectbox(
-        "Choose a Pre-loaded Test Case or Enter Custom Content",
+        "Choose a Test Case or Enter Custom Content",
         [
             "Custom Input",
             "PR Wire Example (BusinessWire Advertorial)",
             "Organic Journalism (RBI Rate Policy - Reuters)",
-            "Corporate Milestone Cheerleading (Obscure Tier-2)",
+            "Corporate Milestone Release",
         ]
     )
 
     if sample_choice == "PR Wire Example (BusinessWire Advertorial)":
-        init_title = "Global Leader Announces Landmark Milestone and Award in Modern Cloud Innovation"
-        init_body = "Click here to buy our enterprise solution and subscribe to our newsletter for free demo access. We are proud to announce record growth."
+        init_title = "Global Leader Announces Milestone and Award in Enterprise Cloud Services"
+        init_body = "Click here to buy our enterprise solution and subscribe to our newsletter for free demo access. We are pleased to announce product expansion."
         init_domain = "businesswire.com"
         init_url = "https://businesswire.com/news/123"
     elif sample_choice == "Organic Journalism (RBI Rate Policy - Reuters)":
@@ -135,9 +132,9 @@ elif app_mode == "🔬 Forensic Article Inspector":
         init_body = "The monetary policy committee voted 5-1 to maintain status quo as consumer food inflation remained elevated, analysts from Nomura and Goldman noted."
         init_domain = "reuters.com"
         init_url = "https://reuters.com/markets/rbi-rates"
-    elif sample_choice == "Corporate Milestone Cheerleading (Obscure Tier-2)":
-        init_title = "Company celebrates best-ever quarter with unprecedented achievements"
-        init_body = "We are pleased to share our robust milestone as our visionary leadership leads the transformation across key domestic sectors."
+    elif sample_choice == "Corporate Milestone Release":
+        init_title = "Company reports quarterly expansion and operational progress"
+        init_body = "We are pleased to report strong performance across key domestic operating segments following recent strategic capital investments."
         init_domain = "dailyexpressnews.in"
         init_url = "https://dailyexpressnews.in/post/456"
     else:
@@ -154,7 +151,7 @@ elif app_mode == "🔬 Forensic Article Inspector":
     with col_in2:
         text = st.text_area("Article Body Content", value=init_body, height=130)
 
-    if st.button("Run Forensic Analysis", type="primary"):
+    if st.button("Classify Content", type="primary"):
         res = score_single_article(headline=headline, text=text, domain=domain, url=url)
 
         res_col1, res_col2, res_col3 = st.columns(3)
@@ -172,9 +169,9 @@ elif app_mode == "🔬 Forensic Article Inspector":
         st.dataframe(df_attr, use_container_width=True, hide_index=True)
 
 # -------------------------------------------------------------
-# TAB 3: Factor Backtest & Strategy
+# TAB 3: Factor Backtest
 # -------------------------------------------------------------
-elif app_mode == "📈 Factor Backtest & Strategy":
+elif app_mode == "Factor Backtest":
     st.subheader("Quantitative Factor Portfolio Simulation (2020–2026)")
 
     cost_slippage = st.slider("Transaction Cost / Slippage per trade (bps)", min_value=0, max_value=50, value=10, step=5)
@@ -204,11 +201,11 @@ elif app_mode == "📈 Factor Backtest & Strategy":
     st.image("outputs/figures/backtest_equity_curve.png", caption="Cumulative Wealth & Drawdown Curves")
 
 # -------------------------------------------------------------
-# TAB 4: News Propagation DAG
+# TAB 4: Propagation Network
 # -------------------------------------------------------------
-elif app_mode == "🕸️ News Propagation DAG":
-    st.subheader("Cross-Media News Cascading & Propagation DAG")
-    st.markdown("Traces how PR wire releases cascade through aggregators to national newsrooms.")
+elif app_mode == "Propagation Network":
+    st.subheader("Cross-Media News Cascading & Propagation Network")
+    st.markdown("Traces how PR releases cascade through aggregators to national newsrooms.")
     st.image("outputs/figures/propagation_dag_network.png", caption="Information Cascading Graph across Hop Levels")
 
     with open("outputs/tables/propagation_cascades.json", "r", encoding="utf-8") as f:
@@ -217,18 +214,18 @@ elif app_mode == "🕸️ News Propagation DAG":
     st.dataframe(pd.DataFrame(cascades).drop(columns=["nodes"]), use_container_width=True)
 
 # -------------------------------------------------------------
-# TAB 5: Rigor & Multi-Judge Validation
+# TAB 5: Model Validation
 # -------------------------------------------------------------
-elif app_mode == "🛡️ Rigor & Multi-Judge Validation":
-    st.subheader("Forensic Rigor, Non-Circularity Proofs & Multi-Judge Agreement")
+elif app_mode == "Model Validation":
+    st.subheader("Non-Circularity Verification & Multi-Judge Agreement")
 
     st.markdown("""
     ### 1. Structural Non-Circularity Verification (AST Guard)
-    - **Original Flaw**: The initial weak classifier trained on features that directly contained the weak-label rules (`is_pr_wire`, `source_tier`), causing tautological AUC=1.00.
-    - **Resolution**: Features are formally partitioned into strictly orthogonal behavioral sets. AST static analysis passes with zero contaminated features.
+    - Verifies that model input features do not overlap with weak-label heuristics.
+    - Static AST analysis confirms zero contaminated features in the final training dataset.
     """)
 
-    st.markdown("### 2. Multi-Judge Inter-Annotator Agreement (200 Gold-Standard Annotations)")
+    st.markdown("### 2. Multi-Judge Inter-Annotator Agreement (200 Benchmark Annotations)")
     with open("outputs/tables/inter_annotator_agreement.json", "r", encoding="utf-8") as f:
         agreement = json.load(f)
     st.json(agreement)
