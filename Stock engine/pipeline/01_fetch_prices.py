@@ -29,7 +29,6 @@ import pandas as pd
 import yfinance as yf
 
 # ── project imports ───────────────────────────────────────────────
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from config.settings import (
     DATA_PROCESSED,
     FETCH_END,

@@ -21,10 +21,6 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-import sys
-from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-
 from config.settings import (
     ALPHA,
     DIRECTION_THRESHOLD,
@@ -39,30 +35,35 @@ from config.settings import (
 
 
 def score_article(
-    tone: float,
-    sponsored_prob: float,
-    is_closed_window: bool,
-) -> float:
-    """Compute weighted score for a single article.
+    tone: float | np.ndarray | pd.Series,
+    sponsored_prob: float | np.ndarray | pd.Series,
+    is_closed_window: bool | np.ndarray | pd.Series,
+) -> float | np.ndarray:
+    """Compute weighted score for article(s) (scalar or vectorized).
 
     Parameters
     ----------
-    tone : float
+    tone : float or array-like
         Raw GDELT tone score (typically [-20, +20]).
-    sponsored_prob : float
-        Probability that this article is sponsored (0-1).
-    is_closed_window : bool
-        True if the article was published during market-closed hours.
+    sponsored_prob : float or array-like
+        Probability that article is sponsored (0-1).
+    is_closed_window : bool or array-like
+        True if article was published during market-closed hours.
 
     Returns
     -------
-    float
-        Weighted article score.
+    float or np.ndarray
+        Weighted article score(s).
     """
-    article_score = tone / TONE_NORMALIZER
-    organic_weight = max(1.0 - sponsored_prob, ORGANIC_WEIGHT_FLOOR)
-    time_weight = TIME_WEIGHT_CLOSED if is_closed_window else TIME_WEIGHT_OPEN
-    return article_score * organic_weight * time_weight
+    tone_arr = np.asarray(tone, dtype=float)
+    prob_arr = np.asarray(sponsored_prob, dtype=float)
+    closed_arr = np.asarray(is_closed_window, dtype=bool)
+
+    article_score = tone_arr / TONE_NORMALIZER
+    organic_weight = np.maximum(1.0 - prob_arr, ORGANIC_WEIGHT_FLOOR)
+    time_weight = np.where(closed_arr, TIME_WEIGHT_CLOSED, TIME_WEIGHT_OPEN)
+    res = article_score * organic_weight * time_weight
+    return float(res) if np.ndim(res) == 0 else res
 
 
 def generate_signal(
@@ -86,24 +87,23 @@ def generate_signal(
         raw_signal, pred_score, direction, n_articles,
         n_organic, n_sponsored
     """
-    if len(articles) < MIN_ARTICLES_FOR_SIGNAL:
+    n_articles = len(articles)
+    if n_articles < MIN_ARTICLES_FOR_SIGNAL:
         return {
             "raw_signal": np.nan,
             "pred_score": np.nan,
             "direction": "INSUFFICIENT_DATA",
-            "n_articles": len(articles),
+            "n_articles": n_articles,
             "n_organic": 0,
             "n_sponsored": 0,
         }
 
-    weighted_scores = []
-    for _, row in articles.iterrows():
-        tone = row.get(tone_col, 0) or 0
-        prob = row.get(prob_col, 0.5) or 0.5
-        bucket = row.get(bucket_col, "OPEN")
-        is_closed = bucket in ("CLOSED_POST", "CLOSED_PRE")
-        weighted_scores.append(score_article(tone, prob, is_closed))
+    tones = articles[tone_col].fillna(0.0).to_numpy() if tone_col in articles else np.zeros(n_articles)
+    probs = articles[prob_col].fillna(0.5).to_numpy() if prob_col in articles else np.full(n_articles, 0.5)
+    buckets = articles[bucket_col].to_numpy() if bucket_col in articles else np.array(["OPEN"] * n_articles)
+    is_closed = np.isin(buckets, ["CLOSED_POST", "CLOSED_PRE"])
 
+    weighted_scores = score_article(tones, probs, is_closed)
     raw_signal = float(np.mean(weighted_scores))
     pred_score = float(np.tanh(ALPHA * raw_signal))
 
@@ -114,13 +114,16 @@ def generate_signal(
     else:
         direction = "NEUTRAL"
 
+    n_organic = int((probs < SPONSORED_PROB_LOW).sum())
+    n_sponsored = int((probs > SPONSORED_PROB_HIGH).sum())
+
     return {
         "raw_signal": raw_signal,
         "pred_score": pred_score,
         "direction": direction,
-        "n_articles": len(articles),
-        "n_organic": int((articles[prob_col] < SPONSORED_PROB_LOW).sum()),
-        "n_sponsored": int((articles[prob_col] > SPONSORED_PROB_HIGH).sum()),
+        "n_articles": n_articles,
+        "n_organic": n_organic,
+        "n_sponsored": n_sponsored,
     }
 
 
@@ -132,7 +135,7 @@ def batch_generate_signals(
     prob_col: str = "sponsored_prob",
     bucket_col: str = "time_bucket",
 ) -> pd.DataFrame:
-    """Generate signals for all (ticker, date) groups in the DataFrame.
+    """Generate signals for all (ticker, date) groups in the DataFrame (fully vectorized).
 
     Parameters
     ----------
@@ -144,18 +147,54 @@ def batch_generate_signals(
     DataFrame with columns: ticker, effective_date, raw_signal, pred_score,
         direction, n_articles, n_organic, n_sponsored
     """
-    records = []
-    for (ticker, date), group in df.groupby([ticker_col, date_col]):
-        signal = generate_signal(group, tone_col, prob_col, bucket_col)
-        signal["ticker"] = ticker
-        signal["effective_date"] = date
-        records.append(signal)
+    if df.empty:
+        return pd.DataFrame(columns=[
+            "ticker", "effective_date", "raw_signal", "pred_score",
+            "direction", "n_articles", "n_organic", "n_sponsored",
+        ])
 
-    result = pd.DataFrame(records)
+    df_calc = df.copy()
+    tones = df_calc[tone_col].fillna(0.0).to_numpy() if tone_col in df_calc else np.zeros(len(df_calc))
+    probs = df_calc[prob_col].fillna(0.5).to_numpy() if prob_col in df_calc else np.full(len(df_calc), 0.5)
+    buckets = df_calc[bucket_col].to_numpy() if bucket_col in df_calc else np.array(["OPEN"] * len(df_calc))
+    is_closed = np.isin(buckets, ["CLOSED_POST", "CLOSED_PRE"])
+
+    df_calc["_weighted_score"] = score_article(tones, probs, is_closed)
+    df_calc["_is_organic"] = (probs < SPONSORED_PROB_LOW).astype(int)
+    df_calc["_is_sponsored"] = (probs > SPONSORED_PROB_HIGH).astype(int)
+
+    grouped = df_calc.groupby([ticker_col, date_col], as_index=False).agg(
+        n_articles=("_weighted_score", "count"),
+        raw_signal=("_weighted_score", "mean"),
+        n_organic=("_is_organic", "sum"),
+        n_sponsored=("_is_sponsored", "sum"),
+    )
+
+    # Filter/mask insufficient articles
+    insufficient = grouped["n_articles"] < MIN_ARTICLES_FOR_SIGNAL
+    grouped.loc[insufficient, "raw_signal"] = np.nan
+
+    # Vectorized tanh pred_score
+    grouped["pred_score"] = np.where(
+        insufficient,
+        np.nan,
+        np.tanh(ALPHA * grouped["raw_signal"].fillna(0.0))
+    )
+
+    # Vectorized direction
+    conditions = [
+        insufficient,
+        grouped["pred_score"] > DIRECTION_THRESHOLD,
+        grouped["pred_score"] < -DIRECTION_THRESHOLD,
+    ]
+    choices = ["INSUFFICIENT_DATA", "BULLISH", "BEARISH"]
+    grouped["direction"] = np.select(conditions, choices, default="NEUTRAL")
+
     col_order = [
-        "ticker", "effective_date",
+        ticker_col, date_col,
         "raw_signal", "pred_score", "direction",
         "n_articles", "n_organic", "n_sponsored",
     ]
-    result = result[[c for c in col_order if c in result.columns]]
-    return result.sort_values(["ticker", "effective_date"]).reset_index(drop=True)
+    result = grouped[[c for c in col_order if c in grouped.columns]]
+    return result.sort_values([ticker_col, date_col]).reset_index(drop=True)
+

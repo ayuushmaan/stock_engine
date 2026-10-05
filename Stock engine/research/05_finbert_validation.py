@@ -116,13 +116,22 @@ print(f'Figure output: {FIG_DIR}')
 # ============================================================
 TARGET_SAMPLE_SIZE = 5000
 
-scores_df = pd.read_parquet(
-    DATA_PROCESSED / 'sponsored_scores.parquet',
-    columns=[
-        'DocumentIdentifier', 'tone_score', 'sponsored_prob',
-        'time_bucket', 'ticker', 'effective_date', 'source_domain',
-    ]
-)
+try:
+    scores_df = pd.read_parquet(
+        DATA_PROCESSED / 'sponsored_scores.parquet',
+        columns=[
+            'DocumentIdentifier', 'tone', 'sponsored_prob',
+            'time_bucket', 'ticker', 'effective_date', 'source_domain',
+        ]
+    ).rename(columns={'tone': 'tone_score'})
+except Exception:
+    scores_df = pd.read_parquet(
+        DATA_PROCESSED / 'sponsored_scores.parquet',
+        columns=[
+            'DocumentIdentifier', 'tone_score', 'sponsored_prob',
+            'time_bucket', 'ticker', 'effective_date', 'source_domain',
+        ]
+    )
 print(f'Loaded sponsored_scores: {len(scores_df):,} rows')
 
 # Classify source credibility
@@ -270,7 +279,7 @@ MODEL_NAME = "ProsusAI/finbert"
 
 print(f'Loading {MODEL_NAME}...')
 tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
-model = AutoModelForSequenceClassification.from_pretrained(MODEL_NAME)
+model = AutoModelForSequenceClassification.from_pretrained(MODEL_NAME, use_safetensors=True)
 model.eval()
 
 # Determine device

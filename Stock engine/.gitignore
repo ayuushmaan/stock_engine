@@ -2,6 +2,10 @@
 # Git Ignore Configuration for Quant Finance / Stock Engine Research
 # ==============================================================================
 
+# --- Secrets ---
+.env
+.env.*
+
 # --- Python & Bytecode ---
 __pycache__/
 *.py[cod]
@@ -159,7 +163,18 @@ torch_cache/
 .triton/
 .agents/
 
+# --- Handbook Chapters & Scratch Documentation ---
+handbook_chapters/
+**/handbook_chapters/**
+*handbook_chapters*
+scratch/handbook_chapters/
+scratch/assemble_handbook.py
+assemble_handbook.py
+PROJECT_EXPLAINED.md
+first_request.txt
+
 # --- Scratch Work & Temporary Directories ---
+scratch/
 scratch/*
 !scratch/.gitkeep
 !scratch/README.md

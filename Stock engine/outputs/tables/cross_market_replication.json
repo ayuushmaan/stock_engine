@@ -1,0 +1,22 @@
+{
+  "NIFTY 50 (India)": {
+    "mean_ic_organic_closed": 0.0482,
+    "mean_ic_sponsored_closed": -0.0094,
+    "mean_ic_organic_open": 0.0185,
+    "mean_ic_sponsored_open": 0.0012,
+    "temporal_multiplier": 2.61,
+    "annualized_ls_sharpe": 1.48,
+    "pr_wire_drag_bps": -24.5,
+    "market_microstructure": "T+1 settlement, High retail volume participation, No pre-open dark pools"
+  },
+  "S&P 500 (US)": {
+    "mean_ic_organic_closed": 0.0345,
+    "mean_ic_sponsored_closed": -0.0062,
+    "mean_ic_organic_open": 0.0162,
+    "mean_ic_sponsored_open": -0.0008,
+    "temporal_multiplier": 2.13,
+    "annualized_ls_sharpe": 1.15,
+    "pr_wire_drag_bps": -19.8,
+    "market_microstructure": "T+1 settlement, Extended hours ATS/electronic trading, Algorithmic price discovery"
+  }
+}

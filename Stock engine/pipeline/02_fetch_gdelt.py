@@ -24,7 +24,6 @@ from pathlib import Path
 import pandas as pd
 
 # ── project imports ───────────────────────────────────────────────
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from config.settings import (
     DATA_PROCESSED,
     FETCH_END,

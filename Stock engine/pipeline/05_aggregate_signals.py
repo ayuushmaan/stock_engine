@@ -29,11 +29,11 @@ import argparse
 import sys
 from pathlib import Path
 
+# pyrefly: ignore [missing-import]
 import numpy as np
 import pandas as pd
 
 # ── project imports ───────────────────────────────────────────────
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from config.settings import (
     DATA_PROCESSED,
     MIN_ARTICLES_FOR_SIGNAL,

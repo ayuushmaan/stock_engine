@@ -26,7 +26,6 @@ import numpy as np
 import pandas as pd
 
 # ── project imports ───────────────────────────────────────────────
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from config.settings import (
     CLOSED_POST_START,
     CLOSED_PRE_END,

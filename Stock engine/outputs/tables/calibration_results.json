@@ -1,0 +1,16 @@
+{
+  "auc": 0.9885,
+  "ap": 0.9733,
+  "n_samples": 100,
+  "optimal_thresholds": {
+    "tau_low": 0.1,
+    "tau_high": 0.55,
+    "coverage": 1.0,
+    "sponsored_precision": 1.0,
+    "organic_precision": 0.8923,
+    "n_sponsored": 35,
+    "n_organic": 65,
+    "n_unclear": 0,
+    "satisfies_constraints": false
+  }
+}

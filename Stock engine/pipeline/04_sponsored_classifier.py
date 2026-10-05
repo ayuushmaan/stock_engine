@@ -32,10 +32,10 @@ Usage:
 from __future__ import annotations
 
 import argparse
-import pickle
 import sys
 from pathlib import Path
 
+import joblib
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -49,7 +49,6 @@ from sklearn.metrics import (
 )
 
 # ── project imports ───────────────────────────────────────────────
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from config.settings import (
     CLASSIFIER_TRAIN_END,
     CLASSIFIER_TRAIN_START,
@@ -378,8 +377,7 @@ def run(dry_run: bool = False) -> None:
 
     # ── Save model ────────────────────────────────────────────────
     model_path = MODELS_DIR / "sponsored_classifier.pkl"
-    with open(model_path, "wb") as f:
-        pickle.dump(model, f)
+    joblib.dump(model, model_path)
     logger.info(f"Saved model: {model_path}")
 
     # ── Score ALL articles ────────────────────────────────────────

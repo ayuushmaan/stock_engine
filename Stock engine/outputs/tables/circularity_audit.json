@@ -1,0 +1,85 @@
+{
+  "timestamp": "2026-09-20T17:11:10.011337",
+  "label_script": "C:\\Users\\ayush\\OneDrive\\Desktop\\Theatre\\Guido\\Projects\\Stock engine\\pipeline\\03_label_news.py",
+  "classifier_script": "C:\\Users\\ayush\\OneDrive\\Desktop\\Theatre\\Guido\\Projects\\Stock engine\\pipeline\\04_sponsored_classifier.py",
+  "honest_eval_script": "C:\\Users\\ayush\\OneDrive\\Desktop\\Theatre\\Guido\\Projects\\Stock engine\\pipeline\\08_honest_eval.py",
+  "strict_mode": false,
+  "classifier_features": [
+    "tone_score",
+    "positive_score",
+    "negative_score",
+    "p_n_ratio",
+    "source_tier",
+    "tone_30d_variance",
+    "cross_seed_count",
+    "mention_burst_score",
+    "is_pr_wire",
+    "has_promo_ratio",
+    "has_risk_words",
+    "word_count",
+    "polarity"
+  ],
+  "label_function_identifiers": [
+    "",
+    "Assign weak labels for the sponsored content classifier.\n\n    Returns a Series with values:\n        1.0  = definite sponsored\n        0.0  = definite organic\n        NaN  = uncertain (not used for training)\n\n    Labelling rules:\n        DEFINITE SPONSORED (label=1):\n          - URL contains sponsored content patterns (/brandstudio/ etc.)\n          - Source domain is a known PR wire\n          - Tone in top 5% most positive AND NOT from a Tier-1 outlet\n\n        DEFINITE ORGANIC (label=0):\n          - Source is a Tier-1 quality outlet AND tone is negative or neutral (<=0)\n          - Article URL/title contains risk keywords from a quality outlet\n    ",
+    "ORGANIC_LABEL_DOMAINS",
+    "_has_risk_keywords",
+    "_has_sponsored_url_pattern",
+    "any",
+    "d",
+    "df",
+    "float64",
+    "has_risk",
+    "has_sponsored_url",
+    "is_negative_neutral",
+    "is_not_tier1",
+    "is_organic_source",
+    "is_pr",
+    "is_pr_wire",
+    "is_very_positive",
+    "labels",
+    "np",
+    "pd",
+    "source_tier",
+    "source_url",
+    "tone",
+    "tone_threshold",
+    "url"
+  ],
+  "direct_overlap": [
+    "is_pr_wire",
+    "source_tier"
+  ],
+  "all_circular_features": [
+    "is_pr_wire",
+    "source_tier"
+  ],
+  "honest_eval_excluded": [
+    "source_tier",
+    "tone_score",
+    "positive_score",
+    "negative_score",
+    "p_n_ratio",
+    "is_pr_wire",
+    "has_promo_ratio",
+    "has_risk_words"
+  ],
+  "honest_eval_used": [
+    "tone_30d_variance",
+    "cross_seed_count",
+    "mention_burst_score",
+    "word_count",
+    "polarity"
+  ],
+  "honest_circular_contamination": [],
+  "verdict": {
+    "has_circularity_in_original": true,
+    "honest_model_contaminated": false,
+    "n_circular_features": 2,
+    "circular_features": [
+      "is_pr_wire",
+      "source_tier"
+    ],
+    "build_pass": true
+  }
+}

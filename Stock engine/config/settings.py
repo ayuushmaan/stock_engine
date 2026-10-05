@@ -3,7 +3,14 @@
 All tunable parameters, date ranges, thresholds, and constants live here.
 No side-effects on import — call ``seed_everything()`` explicitly in scripts.
 """
+import os
 from pathlib import Path
+
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
 # ============================================================
 # PROJECT PATHS
@@ -149,10 +156,11 @@ EVENT_STUDY_WINDOW = (-2, 5)     # days around event for CAR
 QUINTILE_THRESHOLD = 0.80        # top quintile for event definition
 
 # ============================================================
-# BIGQUERY / GDELT
+# BIGQUERY / GDELT & LLM CONFIG
 # ============================================================
-# Set your GCP project ID here or via env var GOOGLE_CLOUD_PROJECT
-GCP_PROJECT_ID = "stock-sentiment-app-315d6"
+GCP_PROJECT_ID = os.getenv("GOOGLE_CLOUD_PROJECT", "stock-sentiment-app-315d6")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
 
 GDELT_TABLE = "gdelt-bq.gdeltv2.gkg_partitioned"
 GDELT_EVENTS_TABLE = "gdelt-bq.gdeltv2.events"

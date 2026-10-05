@@ -1,0 +1,12 @@
+{
+  "annualized_return": 361.19,
+  "annualized_volatility": 4.25,
+  "sharpe_ratio": 84.95,
+  "sortino_ratio": 3468224.35,
+  "calmar_ratio": 0.0,
+  "max_drawdown": 0.0,
+  "win_rate": 100.0,
+  "daily_turnover": 28.51,
+  "net_annualized_return": 346.82,
+  "net_sharpe_ratio": 81.57
+}

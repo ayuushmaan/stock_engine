@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: stock-engine-dashboard
+    command: streamlit run app/app.py --server.port=8501 --server.address=0.0.0.0
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+      - ./outputs:/app/outputs
+    restart: unless-stopped
+
+  test:
+    build: .
+    container_name: stock-engine-tests
+    command: pytest tests/ -v
+    volumes:
+      - .:/app
