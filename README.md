@@ -86,8 +86,10 @@ Transformer note: ProsusAI/yiyanghkust FinBERT blocked (`pytorch_model.bin` reje
 
 > [!WARNING]
 > Table below is a **research target, not current on-disk result.**
-> On-disk `inter_annotator_agreement.json`: `human_vs_llm kappa=0.0` (LLM got empty titles, predicted all organic).
-> Re-running judge on scraped bodies is pending.
+> On-disk `inter_annotator_agreement.json` (measured, n=149 real bodies):
+> `human_vs_hhee_v2_oof kappa=0.11`, `human_vs_local_judge kappa=-0.03`
+> (offline NLI judge over-calls sponsored 51 vs 29 true; HF 70B pending credits).
+> The old `kappa=0.0` run used empty titles and is discarded.
 
 Evaluated against a gold-standard benchmark of 200 manually annotated articles (target):
 

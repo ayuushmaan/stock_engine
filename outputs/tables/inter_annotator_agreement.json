@@ -44,7 +44,27 @@
         ]
       ],
       "note": "0.5 threshold too conservative at 19pct base rate (recall 0.069, precision 1.0); ranking AUC 0.69 OK \u2014 threshold calibration pending (see calibrate_thresholds.py)"
+    },
+    "human_vs_local_judge": {
+      "n": 149,
+      "cohen_kappa": -0.0308,
+      "gwet_ac1": 0.3147,
+      "raw_agreement": 0.5839,
+      "precision": 0.1765,
+      "recall": 0.3103,
+      "f1_score": 0.225,
+      "confusion_matrix": [
+        [
+          78,
+          42
+        ],
+        [
+          20,
+          9
+        ]
+      ],
+      "model": "local:typeform/distilbert-base-uncased-mnli zero-shot (offline CPU; HF Inference paywalled 402)"
     }
   },
-  "method": "HHEE-v2 text-only OOF vs hand labels; replaces empty-title mock-LLM run (kappa was 0.0). True LLM judge pending API keys."
+  "method": "Local NLI judge (149 bodies) + HHEE-v2 OOF; HF 70B pending credits."
 }
