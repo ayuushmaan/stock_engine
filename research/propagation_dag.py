@@ -186,8 +186,60 @@ def plot_cascade_graph(cascade: PropagationCascade, save_path: Path):
     logger.info(f"Saved propagation DAG plot: {save_path}")
 
 
+def measure_cascade_proxies() -> Dict[str, Any]:
+    """Measure REAL cascade proxies from GDELT labeled panel (no simulation).
+
+    For each (ticker, effective_date) with >=3 articles: article count,
+    unique-domain count, tone mean/std/range, PR-wire share. Heavy
+    multi-domain days with compressed tone = measured cascade footprint.
+    Falls back gracefully when the 1.4M-row panel is absent.
+    """
+    panel_path = DATA_PROCESSED / "gdelt_labeled.parquet"
+    if not panel_path.exists():
+        logger.warning(f"{panel_path} missing — measured proxies unavailable.")
+        return {"available": False}
+    df = pd.read_parquet(panel_path, columns=[
+        "ticker", "effective_date", "source_domain", "tone", "source_url",
+    ])
+    df["effective_date"] = pd.to_datetime(df["effective_date"])
+    pr_pat = r"prnewswire|businesswire|globenewswire|newsvoir|ani-pr|einpresswire|indiaprwire"
+    df["is_pr_wire"] = df["source_url"].fillna("").str.lower().str.contains(pr_pat, regex=True)
+    g = df.groupby(["ticker", "effective_date"])
+    stats = g.agg(
+        n_articles=("tone", "size"),
+        n_domains=("source_domain", "nunique"),
+        tone_mean=("tone", "mean"),
+        tone_std=("tone", "std"),
+        tone_min=("tone", "min"),
+        tone_max=("tone", "max"),
+        pr_wire_share=("is_pr_wire", "mean"),
+    ).reset_index()
+    stats["tone_range"] = stats["tone_max"] - stats["tone_min"]
+    cascades = stats[stats["n_articles"] >= 3].copy()
+    multi = cascades[cascades["n_domains"] >= 3]
+    return {
+        "available": True,
+        "n_ticker_days": int(len(stats)),
+        "n_cascade_days_ge3": int(len(cascades)),
+        "n_multi_domain_days": int(len(multi)),
+        "median_domains_per_cascade_day": float(cascades["n_domains"].median()) if len(cascades) else 0.0,
+        "median_tone_range": float(cascades["tone_range"].median()) if len(cascades) else 0.0,
+        "mean_pr_wire_share": float(cascades["pr_wire_share"].mean()) if len(cascades) else 0.0,
+        "top_cascade_days": cascades.nlargest(10, "n_domains")[
+            ["ticker", "effective_date", "n_articles", "n_domains", "tone_mean", "tone_range", "pr_wire_share"]
+        ].assign(effective_date=lambda d: d["effective_date"].dt.strftime("%Y-%m-%d")).to_dict("records"),
+    }
+
+
 def run_propagation_analysis():
-    """Execute information cascade analysis."""
+    """Execute information cascade analysis (measured proxies + illustrative simulated DAG)."""
+    measured = measure_cascade_proxies()
+    out_measured = OUTPUTS_TABLES / "propagation_measured.json"
+    out_measured.parent.mkdir(parents=True, exist_ok=True)
+    with open(out_measured, "w", encoding="utf-8") as f:
+        json.dump(measured, f, indent=2, default=str)
+    logger.info(f"Measured cascade proxies: {measured.get('n_multi_domain_days', 'N/A')} multi-domain days -> {out_measured}")
+
     cascades = simulate_propagation_cascades(30)
 
     out_json = OUTPUTS_TABLES / "propagation_cascades.json"

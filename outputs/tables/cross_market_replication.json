@@ -18,5 +18,7 @@
     "annualized_ls_sharpe": 1.15,
     "pr_wire_drag_bps": -19.8,
     "market_microstructure": "T+1 settlement, Extended hours ATS/electronic trading, Algorithmic price discovery"
-  }
+  },
+  "_placeholder": true,
+  "_note": "Simulated priors only. To make empirical: ingest SPX OHLCV + GDELT US-entity slice, rerun H1xH2, then replace this file."
 }

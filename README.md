@@ -113,7 +113,7 @@ The system analyzes how press releases diffuse across media channels:
 ### 1. Installation
 ```bash
 git clone https://github.com/ayuushmaan/stock_engine.git
-cd stock_engine
+cd stock_engine   # repo root IS the project (no nested folder)
 python -m venv .venv
 source .venv/bin/activate   # On Windows: .venv\Scripts\activate
 pip install -r requirements.txt
@@ -130,13 +130,16 @@ pytest tests/ -v
 python pipeline/check_circularity.py
 ```
 
-### 4. Run Research Pipeline
+### 4. Run Research Pipeline (fail-loud — needs real data, never synthesizes)
+Prerequisites: `data/final/master_dataset.parquet` (pipeline steps 01–06),
+`data/final/article_bodies.parquet` (step 11), `data/final/finbert_scores.parquet`.
 ```bash
-python research/06_baselines.py
-python research/07_signal_decay.py
-python research/08_backtest.py
-python research/09_cross_market.py
-python research/10_propagation_dag.py
+python pipeline/11_scrape_bodies.py --limit 20   # smoke test, then full run
+python research/06_baselines.py      # requires finbert_sentiment — errors clearly if absent
+python research/07_signal_decay.py   # requires real ret_fwd_{h}d columns
+python research/08_backtest.py       # requires master panel
+python research/09_cross_market.py   # PLACEHOLDER: simulated comparison, not empirical
+python research/10_propagation_dag.py # PLACEHOLDER: simulated cascades, not measured
 ```
 
 ### 5. Launch Dashboard

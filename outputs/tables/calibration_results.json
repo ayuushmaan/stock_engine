@@ -1,16 +1,8 @@
 {
-  "auc": 0.9885,
-  "ap": 0.9733,
-  "n_samples": 100,
-  "optimal_thresholds": {
-    "tau_low": 0.1,
-    "tau_high": 0.55,
-    "coverage": 1.0,
-    "sponsored_precision": 1.0,
-    "organic_precision": 0.8923,
-    "n_sponsored": 35,
-    "n_organic": 65,
-    "n_unclear": 0,
-    "satisfies_constraints": false
-  }
+  "method": "HHEE-v2 text-only OOF probas, n=149 real bodies; 90/90 precision gates tested",
+  "result": "GATES UNACHIEVABLE on text alone: no tau_high>=0.5 yields >=3 sponsored calls (model fires 2/149); organic precision max 0.86 at tau<=0.20 (below 0.90 gate)",
+  "sponsored_calls_at_0.5": 2,
+  "organic_precision_at_0.20": 0.86,
+  "conclusion": "Layer-0 domain gates carry sponsored detection; tau_low=0.30/tau_high=0.70 retained for Layer-1 text evidence. Prior file (AUC 0.9885, n=100) was synthetic-mock output \u2014 replaced.",
+  "prior_file_status": "invalid-synthetic-replaced"
 }

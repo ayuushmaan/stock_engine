@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-09-20T17:11:10.011337",
-  "label_script": "C:\\Users\\ayush\\OneDrive\\Desktop\\Theatre\\Guido\\Projects\\Stock engine\\pipeline\\03_label_news.py",
-  "classifier_script": "C:\\Users\\ayush\\OneDrive\\Desktop\\Theatre\\Guido\\Projects\\Stock engine\\pipeline\\04_sponsored_classifier.py",
-  "honest_eval_script": "C:\\Users\\ayush\\OneDrive\\Desktop\\Theatre\\Guido\\Projects\\Stock engine\\pipeline\\08_honest_eval.py",
+  "timestamp": "2026-10-09T03:45:14.833636",
+  "label_script": "C:\\Users\\ayush\\OneDrive\\Desktop\\Theatre\\Guido\\Projects\\pipeline\\03_label_news.py",
+  "classifier_script": "C:\\Users\\ayush\\OneDrive\\Desktop\\Theatre\\Guido\\Projects\\pipeline\\04_sponsored_classifier.py",
+  "honest_eval_script": "C:\\Users\\ayush\\OneDrive\\Desktop\\Theatre\\Guido\\Projects\\pipeline\\08_honest_eval.py",
   "strict_mode": false,
   "classifier_features": [
     "tone_score",

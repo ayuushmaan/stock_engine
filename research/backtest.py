@@ -182,9 +182,30 @@ def plot_backtest_performance(perf_df: pd.DataFrame, save_path: Path):
     logger.info(f"Saved factor backtest chart to {save_path}")
 
 
+def add_predictive_forwards(df: pd.DataFrame) -> pd.DataFrame:
+    """Attach next-trading-day forward returns per ticker (predictive-only).
+
+    Signal at effective date t may only trade returns realized AFTER t:
+      fwd1_close2close_t = close2close_{t+1} per ticker.
+    Same-day columns (ret_overnight/intraday/close2close at t) are
+    contemporaneous and must NOT be used as backtest targets.
+    """
+    out = df.copy()
+    date_col = "effective_date" if "effective_date" in out.columns else "date"
+    out[date_col] = pd.to_datetime(out[date_col])
+    out = out.sort_values(["ticker", date_col])
+    if "ret_close2close" in out.columns:
+        out["fwd1_close2close"] = out.groupby("ticker")["ret_close2close"].shift(-1)
+    if "ret_overnight" in out.columns:
+        out["fwd1_overnight"] = out.groupby("ticker")["ret_overnight"].shift(-1)
+    return out
+
+
 def run_backtest():
-    """Execute quantitative backtest."""
+    """Execute PREDICTIVE quantitative backtest (signal_t -> fwd return)."""
     master_path = DATA_FINAL / "master_panel.parquet"
+    if not master_path.exists():
+        master_path = DATA_FINAL / "master_dataset.parquet"
     if not master_path.exists():
         master_path = DATA_PROCESSED / "sponsored_scores.parquet"
 
@@ -195,12 +216,31 @@ def run_backtest():
             f"Master panel not found at {master_path}. Refusing to synthesize backtest data."
         )
 
-    perf_df, metrics = run_factor_backtest(df, signal_col="pred_score" if "pred_score" in df.columns else "tone_score")
+    if "date" in df.columns and "effective_date" not in df.columns:
+        df = df.rename(columns={"date": "effective_date"})
+    df = add_predictive_forwards(df)
+
+    signal_col = "pred_score" if "pred_score" in df.columns else "net_signal"
+    if "fwd1_close2close" not in df.columns:
+        raise FileNotFoundError(
+            "Could not build fwd1_close2close (need ret_close2close + ticker). "
+            "Refusing contemporaneous backtest."
+        )
+    n_dropped = int(df["fwd1_close2close"].isna().sum())
+    df = df.dropna(subset=["fwd1_close2close"]).reset_index(drop=True)
+    logger.info(f"Dropped {n_dropped} rows with no next-day forward (last date per ticker).")
+
+    perf_df, metrics = run_factor_backtest(
+        df, signal_col=signal_col, return_col="fwd1_close2close", cost_bps=10.0
+    )
+    logger.info(f"PREDICTIVE backtest: signal={signal_col} -> fwd1_close2close, n_days={len(perf_df)}")
 
     out_json = OUTPUTS_TABLES / "factor_backtest_metrics.json"
     out_json.parent.mkdir(parents=True, exist_ok=True)
+    payload = asdict(metrics)
+    payload["_design"] = "predictive: signal_t -> next-day close2close, 10bps; same-day columns excluded"
     with open(out_json, "w", encoding="utf-8") as f:
-        json.dump(asdict(metrics), f, indent=2)
+        json.dump(payload, f, indent=2)
 
     plot_backtest_performance(perf_df, OUTPUTS_FIGURES / "backtest_equity_curve.png")
     logger.info(f"Backtest complete. Metrics: {metrics}")

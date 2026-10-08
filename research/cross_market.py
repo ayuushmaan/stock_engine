@@ -78,14 +78,22 @@ def plot_cross_market_comparison(data: Dict[str, Any], save_path: Path):
 
 
 def run_cross_market_analysis():
-    """Execute cross-market validation."""
+    """Execute cross-market validation.
+
+    PLACEHOLDER: no S&P 500 data has been ingested; values below are
+    simulated priors, NOT measurements. Do not cite as empirical.
+    """
+    logger.warning("Cross-market output is SIMULATED (no SPX data). See _placeholder flag.")
     data = simulate_cross_market_comparison()
     out_json = OUTPUTS_TABLES / "cross_market_replication.json"
     out_json.parent.mkdir(parents=True, exist_ok=True)
+    plot_cross_market_comparison(data, OUTPUTS_FIGURES / "cross_market_comparison.png")
+
+    data["_placeholder"] = True
+    data["_note"] = ("Simulated priors only. To make empirical: ingest SPX OHLCV + "
+                     "GDELT US-entity slice, rerun H1xH2, then replace this file.")
     with open(out_json, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
-
-    plot_cross_market_comparison(data, OUTPUTS_FIGURES / "cross_market_comparison.png")
     logger.info(f"Cross market analysis written to {out_json}")
 
 

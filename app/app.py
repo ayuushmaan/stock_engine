@@ -189,12 +189,12 @@ elif app_mode == "Article Inspector":
 # TAB 3: Factor Backtest
 # -------------------------------------------------------------
 elif app_mode == "Factor Backtest":
-    st.subheader("Quantitative Factor Portfolio Simulation — REAL BACKTEST")
-    st.caption("Uses `data/final/master_dataset.parquet`: signal=`net_signal`, return=`ret_close2close`. Same-day (contemporaneous) — predictive fwd version in progress.")
+    st.subheader("Quantitative Factor Portfolio Simulation — PREDICTIVE BACKTEST")
+    st.caption("`net_signal` at t → next-day `fwd1_close2close`. Same-day columns excluded (contemporaneous leak fixed Oct 2026).")
 
     cost_slippage = st.slider("Transaction Cost / Slippage per trade (bps)", min_value=0, max_value=50, value=10, step=5)
 
-    from research.backtest import run_factor_backtest
+    from research.backtest import run_factor_backtest, add_predictive_forwards
     from pathlib import Path as _P
     _mp = _P("data/final/master_dataset.parquet")
     if not _mp.exists():
@@ -204,10 +204,10 @@ elif app_mode == "Factor Backtest":
     # backtest engine expects effective_date col; master uses date
     if "effective_date" not in df_bt.columns and "date" in df_bt.columns:
         df_bt = df_bt.rename(columns={"date": "effective_date"})
+    df_bt = add_predictive_forwards(df_bt).dropna(subset=["fwd1_close2close"]).reset_index(drop=True)
     _sig = "net_signal" if "net_signal" in df_bt.columns else "pred_score"
-    _ret = "ret_close2close" if "ret_close2close" in df_bt.columns else "ret_fwd_1d"
 
-    perf_df, metrics = run_factor_backtest(df_bt, signal_col=_sig, return_col=_ret, cost_bps=float(cost_slippage))
+    perf_df, metrics = run_factor_backtest(df_bt, signal_col=_sig, return_col="fwd1_close2close", cost_bps=float(cost_slippage))
 
     m_col1, m_col2, m_col3, m_col4 = st.columns(4)
     with m_col1:
