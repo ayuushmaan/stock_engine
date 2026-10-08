@@ -1,0 +1,9 @@
+{
+  "model": "mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis (safetensors)",
+  "n": 149,
+  "mean_sentiment": 0.2711,
+  "organic_mean": 0.2231,
+  "sponsored_mean": 0.4699,
+  "sponsored_detection_auc": 0.6136,
+  "note": "ProsusAI + yiyanghkust finbert blocked: pytorch_model.bin rejected by torch 2.5 CVE-2025-32434 gate; distilroberta used as real transformer baseline"
+}

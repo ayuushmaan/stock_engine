@@ -34,6 +34,7 @@ def test_evaluate_five_baselines():
     df = pd.DataFrame({
         "effective_date": pd.date_range("2023-01-01", periods=20, freq="B").repeat(10),
         "raw_tone": np.random.normal(0, 2, n),
+        "finbert_sentiment": np.random.normal(0, 1, n),
         "sponsored_prob": np.random.uniform(0, 1, n),
         "time_bucket": np.random.choice(["OPEN", "CLOSED_PRE"], n),
         "ret_fwd_1d": np.random.normal(0, 0.02, n),

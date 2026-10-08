@@ -82,12 +82,19 @@ def evaluate_five_baselines(master_df: pd.DataFrame) -> Dict[str, Any]:
     fwd_col = "ret_fwd_1d" if "ret_fwd_1d" in df.columns else "target_return"
 
     if fwd_col not in df.columns:
-        logger.warning(f"Forward return column '{fwd_col}' missing. Creating synthetic test returns.")
-        np.random.seed(42)
-        df[fwd_col] = np.random.normal(0.0005, 0.018, size=len(df))
+        raise FileNotFoundError(
+            f"Forward return column '{fwd_col}' missing in {list(df.columns)}. "
+            "Refusing to synthesize returns — provide real forward returns "
+            "(see pipeline/06_build_master.py, ret_fwd_1d / ret_overnight)."
+        )
 
     df["sig_1_raw_tone"] = df["raw_tone"] if "raw_tone" in df.columns else df.get("tone_score", 0.0)
-    df["sig_2_finbert"] = df.get("finbert_sentiment", df["sig_1_raw_tone"] * 0.9 + np.random.normal(0, 0.2, len(df)))
+    if "finbert_sentiment" not in df.columns:
+        raise FileNotFoundError(
+            "Missing 'finbert_sentiment' — refusing to proxy FinBERT as tone*0.9+noise. "
+            "Run research/05_finbert_validation.py to generate real FinBERT scores first."
+        )
+    df["sig_2_finbert"] = df["finbert_sentiment"]
 
     closed_weight = np.where(df.get("time_bucket", "OPEN").isin(["CLOSED_PRE", "CLOSED_POST"]), 1.5, 1.0)
     df["sig_3_temporal_only"] = df["sig_1_raw_tone"] * closed_weight
@@ -198,17 +205,10 @@ def run_baselines():
     if master_path.exists():
         df = pd.read_parquet(master_path)
     else:
-        logger.warning(f"Master panel not found at {master_path}. Generating synthetic test data.")
-        np.random.seed(42)
-        n = 1000
-        df = pd.DataFrame({
-            "effective_date": pd.date_range("2023-01-01", periods=100, freq="B").repeat(10),
-            "ticker": [f"STOCK_{i%10}" for i in range(n)],
-            "raw_tone": np.random.normal(0.5, 3.0, n),
-            "sponsored_prob": np.random.uniform(0.1, 0.9, n),
-            "time_bucket": np.random.choice(["OPEN", "CLOSED_PRE", "CLOSED_POST"], n),
-            "ret_fwd_1d": np.random.normal(0.0005, 0.02, n),
-        })
+        raise FileNotFoundError(
+            f"Master panel not found at {master_path} (tried DATA_FINAL/master_panel.parquet "
+            "and DATA_PROCESSED/sponsored_scores.parquet). Refusing to synthesize test data."
+        )
 
     results = evaluate_five_baselines(df)
     save_baselines_report(results, OUTPUTS_TABLES / "five_baselines_benchmark.json")

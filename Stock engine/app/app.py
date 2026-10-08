@@ -71,37 +71,54 @@ app_mode = st.sidebar.radio(
 # TAB 1: Alpha Signal Screener
 # -------------------------------------------------------------
 if app_mode == "Signal Screener":
-    st.subheader("NIFTY 50 Cross-Sectional Alpha Signals")
-    st.markdown("Daily signals derived by combining source credibility filtering with market timing asymmetry.")
-
-    col1, col2, col3, col4 = st.columns(4)
-    with col1:
-        st.metric("Total Universe", "50 Constituents", "NSE Benchmark")
-    with col2:
-        st.metric("Mean Cross-Sectional IC", "+0.0482", "Closed Window (HAC t=3.84)")
-    with col3:
-        st.metric("PR Wire Discount", "-24.5 bps", "Spread vs Organic")
-    with col4:
-        st.metric("Factor Sharpe (Net)", "1.48", "10 bps Slippage")
-
-    tickers = ["RELIANCE", "TCS", "HDFCBANK", "INFY", "ICICIBANK", "BHARTIARTL", "ITC", "LT", "SBIN", "TATAMOTORS"]
-    np.random.seed(42)
-    scores = np.random.uniform(-0.65, 0.75, len(tickers))
-    tones = scores * 6.0 + np.random.normal(0, 1.0, len(tickers))
-    n_org = np.random.randint(3, 15, len(tickers))
-    n_spon = np.random.randint(0, 5, len(tickers))
-
-    df_screener = pd.DataFrame({
-        "Ticker": tickers,
-        "Raw GDELT Tone": np.round(tones, 2),
-        "Organic Count": n_org,
-        "Sponsored Count": n_spon,
-        "Alpha Score": np.round(scores, 3),
-        "Signal Direction": ["BULLISH" if s > 0.10 else ("BEARISH" if s < -0.10 else "NEUTRAL") for s in scores],
-        "Timing Window": np.random.choice(["CLOSED_PRE (1.5x)", "CLOSED_POST (1.5x)", "OPEN (1.0x)"], len(tickers)),
-    }).sort_values("Alpha Score", ascending=False)
-
-    st.dataframe(df_screener, use_container_width=True, hide_index=True)
+    st.subheader("NIFTY 50 Cross-Sectional Alpha Signals — REAL DATA")
+    st.markdown("Daily signals from `data/processed/daily_signals.parquet` (fallback: `data/final/master_dataset.parquet`). No synthetic values.")
+    from pathlib import Path as _Path
+    _bench_path = _Path("outputs/tables/five_baselines_benchmark.json")
+    if _bench_path.exists():
+        _bench = json.load(open(_bench_path, encoding="utf-8"))
+        _full = _bench.get("5. Full Proposed Signal", {})
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.metric("Total Universe", "50 Constituents", "NSE Benchmark")
+        with col2:
+            st.metric("Full-signal Mean IC (on-disk)", f"{_full.get('mean_ic', 0):+.4f}", f"HAC t={_full.get('hac_tstat', 0)}")
+        with col3:
+            st.metric("Full-signal Ann. L/S", f"{_full.get('ann_ls_return', 0):+.1f}%", f"FDR p={_full.get('p_value_fdr', 1)}")
+        with col4:
+            st.metric("Status", "NULL RESULT", "IC ~0.004, ns — repair in progress")
+    # Load real signals: latest date available
+    _sig_path = _Path("data/processed/daily_signals.parquet")
+    _master_path = _Path("data/final/master_dataset.parquet")
+    try:
+        if _sig_path.exists():
+            _df = pd.read_parquet(_sig_path)
+            _date_col = "effective_date" if "effective_date" in _df.columns else "date"
+            _df[_date_col] = pd.to_datetime(_df[_date_col])
+            _latest = _df[_date_col].max()
+            df_screener = _df[_df[_date_col] == _latest].copy()
+            st.caption(f"Showing {_latest.date()} — {len(df_screener)} tickers with signals (latest in daily_signals.parquet).")
+            # Derive alpha score + direction from net_signal if pred_score absent
+            if "pred_score" not in df_screener.columns:
+                df_screener["Alpha Score"] = df_screener.get("net_signal", 0).fillna(0).round(3)
+            else:
+                df_screener["Alpha Score"] = df_screener["pred_score"].round(3)
+            def _dir(s):
+                return "BULLISH" if s > 0.10 else ("BEARISH" if s < -0.10 else "NEUTRAL")
+            df_screener["Signal Direction"] = df_screener["Alpha Score"].apply(_dir)
+            _show = [c for c in ["ticker", "Alpha Score", "Signal Direction", "article_count_total", "article_count_organic", "article_count_sponsored", "signal_organic_closed", "signal_organic_open"] if c in df_screener.columns]
+            st.dataframe(df_screener[_show].sort_values("Alpha Score", ascending=False), use_container_width=True, hide_index=True)
+        elif _master_path.exists():
+            st.warning("daily_signals.parquet missing — showing latest master_dataset.parquet snapshot.")
+            _df = pd.read_parquet(_master_path)
+            _date_col = "date" if "date" in _df.columns else "effective_date"
+            _latest = pd.to_datetime(_df[_date_col]).max()
+            st.caption(f"Showing {_latest.date()} from master_dataset.")
+            st.dataframe(_df[pd.to_datetime(_df[_date_col]) == _latest].sort_values("net_signal", ascending=False).head(50), use_container_width=True, hide_index=True)
+        else:
+            st.error("No signal data found. Run pipeline/05_aggregate_signals.py first. Refusing to show synthetic data.")
+    except Exception as e:
+        st.error(f"Failed to load real signals: {e}")
 
 # -------------------------------------------------------------
 # TAB 2: Article Inspector
@@ -172,21 +189,25 @@ elif app_mode == "Article Inspector":
 # TAB 3: Factor Backtest
 # -------------------------------------------------------------
 elif app_mode == "Factor Backtest":
-    st.subheader("Quantitative Factor Portfolio Simulation (2020–2026)")
+    st.subheader("Quantitative Factor Portfolio Simulation — REAL BACKTEST")
+    st.caption("Uses `data/final/master_dataset.parquet`: signal=`net_signal`, return=`ret_close2close`. Same-day (contemporaneous) — predictive fwd version in progress.")
 
     cost_slippage = st.slider("Transaction Cost / Slippage per trade (bps)", min_value=0, max_value=50, value=10, step=5)
 
     from research.backtest import run_factor_backtest
-    np.random.seed(42)
-    n = 1500
-    df_bt = pd.DataFrame({
-        "effective_date": pd.date_range("2021-01-01", periods=150, freq="B").repeat(10),
-        "ticker": [f"STOCK_{i%10}" for i in range(n)],
-        "pred_score": np.random.normal(0, 1, n),
-        "ret_fwd_1d": np.random.normal(0.0006, 0.015, n),
-    })
+    from pathlib import Path as _P
+    _mp = _P("data/final/master_dataset.parquet")
+    if not _mp.exists():
+        st.error("master_dataset.parquet missing. Run pipeline/06_build_master.py first. Refusing synthetic backtest.")
+        st.stop()
+    df_bt = pd.read_parquet(_mp)
+    # backtest engine expects effective_date col; master uses date
+    if "effective_date" not in df_bt.columns and "date" in df_bt.columns:
+        df_bt = df_bt.rename(columns={"date": "effective_date"})
+    _sig = "net_signal" if "net_signal" in df_bt.columns else "pred_score"
+    _ret = "ret_close2close" if "ret_close2close" in df_bt.columns else "ret_fwd_1d"
 
-    perf_df, metrics = run_factor_backtest(df_bt, cost_bps=float(cost_slippage))
+    perf_df, metrics = run_factor_backtest(df_bt, signal_col=_sig, return_col=_ret, cost_bps=float(cost_slippage))
 
     m_col1, m_col2, m_col3, m_col4 = st.columns(4)
     with m_col1:

@@ -26,8 +26,13 @@ from pipeline.extractors.news_morphometrics import (
     extract_url_sponsored_flag,
 )
 
-# Default calibrated feature weights for Layer 1 evidence aggregation
-DEFAULT_WEIGHTS: Dict[str, float] = {
+# Layer 1 weights — LEARNED v2 (2026-10-09, n=149 real scraped bodies, text-only, no URL/domain).
+# Method: L1 LogisticRegressionCV(Cs=[0.1,0.5,1,2,5], cv=5) on hand labels, C=2 selected.
+# Stable 5-fold CV AUC = 0.688 (matches metadata-only honest AUC 0.705; no lift without domains).
+# NOTE: unregularized fit (C=10000) reached CV AUC 0.778 but with unstable cta_density coef
+# (+132.6, rare feature, 0.000 vs 0.005 means) — rejected as overfit, see outputs/tables/hhee_v2_weights.json.
+# Previous hand-set v1 kept below for provenance.
+HAND_SET_V1_WEIGHTS: Dict[str, float] = {
     "promo_density": 2.5,
     "cta_density": 3.2,
     "boilerplate_ratio": 2.2,
@@ -35,7 +40,16 @@ DEFAULT_WEIGHTS: Dict[str, float] = {
     "risk_absence": 1.1,
     "quote_monopoly": 0.8,
 }
-DEFAULT_BIAS = -2.8
+HAND_SET_V1_BIAS = -2.8
+DEFAULT_WEIGHTS: Dict[str, float] = {
+    "promo_density": 0.99,
+    "cta_density": 0.234,
+    "boilerplate_ratio": 2.17,
+    "headline_hype": 0.881,
+    "risk_absence": -0.366,
+    "quote_monopoly": -1.255,
+}
+DEFAULT_BIAS = -0.692
 
 
 def sigmoid(z: float) -> float:

@@ -4,6 +4,15 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Tests](https://img.shields.io/badge/Tests-22%2F22%20Passing-brightgreen.svg)]()
 
+> [!WARNING]
+> **Reproduction status (Oct 2026, active repair):** the benchmark table below is a
+> **research target / aspirational snapshot, not the current on-disk result.**
+> Current `outputs/tables/five_baselines_benchmark.json` shows all 5 baselines
+> with `mean IC ~0.004-0.010, FDR p ~0.60 (not significant)`, `factor_backtest_metrics.json`
+> is invalid (synthetic fallback, Sharpe ~85), and `human_vs_llm kappa = 0.0`.
+> We are fixing this in public: fail-loud on missing data, no synthetic returns,
+> predictive-only (no same-day) evaluation. See `outputs/tables/` as ground truth.
+
 ---
 
 ## Overview & Motivation
@@ -58,11 +67,29 @@ The Hierarchical Hybrid Evidence Engine separates promotional and editorial cont
 ### Non-Circularity Verification
 To avoid circular data leakage, `pipeline/check_circularity.py` performs static AST analysis to verify that no weak-labeling rules are included in the feature set used for model training.
 
+### Classifier Progress — Honest, On-Disk (Oct 2026)
+5-fold CV on hand labels. Text features from **real scraped bodies** (`pipeline/11_scrape_bodies.py`, n=149 usable of 200; 74.5% fetch success). Weights learned via L1 logistic, saved in `pipeline/scoring_engine.py` (HHEE v2) + `outputs/tables/hhee_v2_weights.json`.
+
+| Feature set | CV AUC | Note |
+| :--- | :---: | :--- |
+| Metadata-only honest (5 feats, no URL/domain) | `0.7046` | Gate 0 = WEAK tier (`honest_eval_report.json`) |
+| **Text-only learned v2 (6 morphometrics, no URL/domain)** | **`0.6876`** | Stable (C=2). Matches metadata without domains |
+| Text-only unregularized (C=10000) | `0.7776` | **Rejected as overfit** (`cta_density` coef 132.6, rare feature) |
+| Full + Layer-0 domain gates | `0.9579` | Inflated by circularity (pr_wire 82.8% spon vs 0% org) — proves origin dominates |
+| Transformer sentiment alone (DistilRoBERTa-financial) | `0.6136` | Sponsored mean +0.47 vs organic +0.22 — supports H1 mechanism, weak classifier |
+
+Transformer note: ProsusAI/yiyanghkust FinBERT blocked (`pytorch_model.bin` rejected by torch 2.5 CVE-2025-32434 gate); `mrm8488/distilroberta` (safetensors) used as real baseline. Scores in `data/final/finbert_scores.parquet`.
+
 ---
 
 ## Inter-Annotator Agreement
 
-Evaluated against a gold-standard benchmark of 200 manually annotated articles:
+> [!WARNING]
+> Table below is a **research target, not current on-disk result.**
+> On-disk `inter_annotator_agreement.json`: `human_vs_llm kappa=0.0` (LLM got empty titles, predicted all organic).
+> Re-running judge on scraped bodies is pending.
+
+Evaluated against a gold-standard benchmark of 200 manually annotated articles (target):
 
 | Comparison Pair | Cohen's Kappa ($\kappa$) | Gwet's AC1 | Raw Agreement | Precision | Recall | F1-Score |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |

@@ -40,10 +40,10 @@ def compute_decay_curve(
     for h in horizons:
         fwd_col = f"ret_fwd_{h}d"
         if fwd_col not in df.columns:
-            np.random.seed(42 + h)
-            decay_factor = np.exp(-h / 4.0)
-            simulated_fwd = df[signal_col].fillna(0) * 0.003 * decay_factor + np.random.normal(0, 0.02, len(df))
-            df[fwd_col] = simulated_fwd
+            raise FileNotFoundError(
+                f"Missing {fwd_col} in {list(df.columns)}. Refusing to simulate decay forwards — "
+                "build real multi-horizon forwards from prices (see pipeline/01_fetch_prices.py)."
+            )
 
         daily_ics = df.groupby(date_col).apply(
             lambda g: stats.spearmanr(g[signal_col].fillna(0), g[fwd_col]).statistic if len(g) >= 5 else np.nan
@@ -109,13 +109,9 @@ def run_decay_analysis():
     if master_path.exists():
         df = pd.read_parquet(master_path)
     else:
-        logger.warning("Using synthetic data for decay analysis.")
-        np.random.seed(42)
-        n = 1000
-        df = pd.DataFrame({
-            "effective_date": pd.date_range("2023-01-01", periods=100, freq="B").repeat(10),
-            "pred_score": np.random.normal(0, 1, n),
-        })
+        raise FileNotFoundError(
+            f"Master panel not found at {master_path}. Refusing to synthesize decay data."
+        )
 
     decay_results = compute_decay_curve(df, signal_col="pred_score" if "pred_score" in df.columns else "tone_score")
 

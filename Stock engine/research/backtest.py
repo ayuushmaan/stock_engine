@@ -50,10 +50,10 @@ def run_factor_backtest(
     df_sorted = df.sort_values(date_col).copy()
 
     if return_col not in df_sorted.columns:
-        logger.warning(f"Return column '{return_col}' missing. Generating returns based on forward signal covariance.")
-        np.random.seed(42)
-        signal_vals = df_sorted[signal_col].fillna(0).to_numpy()
-        df_sorted[return_col] = signal_vals * 0.002 + np.random.normal(0.0004, 0.015, size=len(df_sorted))
+        raise FileNotFoundError(
+            f"Return column '{return_col}' missing in {list(df_sorted.columns)}. "
+            "Refusing to synthesize returns correlated with signal — provide real forward returns."
+        )
 
     daily_records = []
     unique_dates = df_sorted[date_col].unique()
@@ -191,15 +191,9 @@ def run_backtest():
     if master_path.exists():
         df = pd.read_parquet(master_path)
     else:
-        logger.warning("Generating synthetic data for backtest simulation.")
-        np.random.seed(42)
-        n = 1500
-        df = pd.DataFrame({
-            "effective_date": pd.date_range("2021-01-01", periods=150, freq="B").repeat(10),
-            "ticker": [f"STOCK_{i%10}" for i in range(n)],
-            "pred_score": np.random.normal(0, 1, n),
-            "ret_fwd_1d": np.random.normal(0.0006, 0.015, n),
-        })
+        raise FileNotFoundError(
+            f"Master panel not found at {master_path}. Refusing to synthesize backtest data."
+        )
 
     perf_df, metrics = run_factor_backtest(df, signal_col="pred_score" if "pred_score" in df.columns else "tone_score")
 
