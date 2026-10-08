@@ -39,6 +39,18 @@ from config.settings import (
     setup_logging,
 )
 
+HF_API_BASE = "https://router.huggingface.co/v1"
+
+
+def _get_hf_token() -> str:
+    """Read HF_TOKEN from environment (.env is gitignored — never commit)."""
+    try:
+        from dotenv import load_dotenv
+        load_dotenv()
+    except ImportError:
+        pass
+    return os.getenv("HF_TOKEN", "")
+
 logger = setup_logging()
 
 PROMPT_SYSTEM = """Classify whether a financial news headline or snippet regarding an Indian public company (NIFTY 50) is SPONSORED/PROMOTIONAL content or INDEPENDENT/ORGANIC financial journalism.
@@ -150,6 +162,29 @@ async def label_article_async(
 
     if model.startswith("mock") or client is None:
         raw_result = mock_llm_judge(title, body, domain, url)
+    elif model.startswith("hf:"):
+        hf_model = model[3:]
+        try:
+            response = await client.chat.completions.create(
+                model=hf_model,
+                messages=[
+                    {"role": "system", "content": PROMPT_SYSTEM},
+                    {"role": "user", "content": content_for_prompt},
+                ],
+                response_format={"type": "json_object"},
+                temperature=0.0,
+                max_tokens=400,
+            )
+            content = response.choices[0].message.content.strip()
+            # Strip markdown fences if the model wraps JSON
+            if content.startswith("```"):
+                content = content.strip("`").strip()
+                if content.lower().startswith("json"):
+                    content = content[4:].strip()
+            raw_result = json.loads(content)
+        except Exception as e:
+            logger.warning(f"HF Inference call failed for {article_id}: {e}. Falling back to baseline judge.")
+            raw_result = mock_llm_judge(title, body, domain, url)
     elif "gpt" in model:
         try:
             response = await client.chat.completions.create(
@@ -211,6 +246,18 @@ async def batch_label_articles(
         except ImportError:
             logger.warning("openai package not installed. Using mock judge.")
             model = "mock-judge"
+    elif model.startswith("hf:"):
+        hf_token = _get_hf_token()
+        if not hf_token:
+            logger.warning("HF_TOKEN missing. Using mock judge.")
+            model = "mock-judge"
+        else:
+            try:
+                from openai import AsyncOpenAI
+                client = AsyncOpenAI(base_url=HF_API_BASE, api_key=hf_token)
+            except ImportError:
+                logger.warning("openai package not installed. Using mock judge.")
+                model = "mock-judge"
 
     semaphore = asyncio.Semaphore(max_concurrency)
 

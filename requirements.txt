@@ -35,3 +35,4 @@ tqdm>=4.66
 torch>=2.6  # CVE-2025-32434: FinBERT .bin checkpoints require torch>=2.6
 transformers>=4.40
 sentencepiece>=0.2  # required by some FinBERT tokenizers
+openai>=1.0  # HF Inference router client (OpenAI-compatible) for LLM-as-Judge
