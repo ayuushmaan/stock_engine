@@ -35,8 +35,9 @@ from pipeline._judge_parse import parse_label
 logger = setup_logging()
 
 DEFAULT_MODEL = "Qwen/Qwen2.5-7B-Instruct"
-# On 96GB cards (MoLab RTX PRO 6000) prefer the 32B judge in fp16:
-MOLAB_MODEL = "Qwen/Qwen2.5-32B-Instruct"
+# On 96GB cards (MoLab RTX PRO 6000) the strict pick is Qwen3-32B in fp16:
+# verified Oct 2026: kappa 0.75 vs 200 hand labels (F1 0.81). Ungated.
+MOLAB_MODEL = "Qwen/Qwen3-32B"
 CACHE_DIR = DATA_PROCESSED / "gpu_judge_cache"
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
 MAX_BODY_CHARS = 900
