@@ -37,10 +37,9 @@ from pathlib import Path
 
 import pandas as pd
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
 
 from config.settings import DATA_FINAL, DATA_PROCESSED, OUTPUTS_TABLES, setup_logging
-from pipeline.llm_labeler import PROMPT_SYSTEM
+from pipeline._judge_parse import parse_label
 
 logger = setup_logging()
 
