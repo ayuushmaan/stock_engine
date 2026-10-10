@@ -1,0 +1,9 @@
+{
+  "n_predictions": 10,
+  "n_scored": 10,
+  "n_days": 1,
+  "hit_rate": 0.5,
+  "mean_daily_paper_return_pct": 0.5687,
+  "ann_paper_return_pct": null,
+  "note": "PAPER ONLY \u2014 no capital, no execution. Gross of costs. Annualized figure suppressed until >=20 scored days."
+}

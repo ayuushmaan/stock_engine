@@ -1,0 +1,58 @@
+{
+  "ours_net": {
+    "mean_ic": 0.0051,
+    "t": 1.19,
+    "ndays": 1532,
+    "hit_rate": 0.491,
+    "n": 61691,
+    "ann_spread_pct": 11.17,
+    "sharpe": 0.8
+  },
+  "ours_organic_only": {
+    "mean_ic": 0.008,
+    "t": 1.86,
+    "ndays": 1532,
+    "hit_rate": 0.4987,
+    "n": 61691,
+    "ann_spread_pct": 8.19,
+    "sharpe": 0.55
+  },
+  "tone_only_no_filter": {
+    "mean_ic": 0.0093,
+    "t": 2.14,
+    "ndays": 1532,
+    "hit_rate": 0.505,
+    "n": 61691,
+    "ann_spread_pct": 10.43,
+    "sharpe": 0.72
+  },
+  "momentum_20d": {
+    "mean_ic": -0.0008,
+    "t": -0.15,
+    "ndays": 1512,
+    "hit_rate": 0.5034,
+    "n": 60711,
+    "ann_spread_pct": 1.5,
+    "sharpe": 0.08
+  },
+  "momentum_5d": {
+    "mean_ic": -0.0122,
+    "t": -2.28,
+    "ndays": 1527,
+    "hit_rate": 0.4976,
+    "n": 61446,
+    "ann_spread_pct": -6.43,
+    "sharpe": -0.35
+  },
+  "buy_hold_equal_weight": {
+    "ann_return_pct": 22.89,
+    "ann_vol_pct": 18.14
+  },
+  "ours_net_backtest_10bps": {
+    "gross_ann_pct": 11.17,
+    "net_ann_pct": -22.43,
+    "net_sharpe": -1.6,
+    "max_dd_pct": -79.6,
+    "turnover_pct": 66.66
+  }
+}
