@@ -38,6 +38,32 @@ DEFAULT_MODEL = "Qwen/Qwen2.5-7B-Instruct"
 # On 96GB cards (MoLab RTX PRO 6000) the strict pick is Qwen3-32B in fp16:
 # verified Oct 2026: kappa 0.75 vs 200 hand labels (F1 0.81). Ungated.
 MOLAB_MODEL = "Qwen/Qwen3-32B"
+
+# ── FROZEN JUDGE SPEC (anti-drift) ──────────────────────────────────
+# The judge is versioned like a model artifact. ANY change to model,
+# rubric, or decoding invalidates prior agreement claims and MUST be
+# followed by a re-audit on the human-labeled subset
+# (pipeline/14_audit_judge.py) before results are cited.
+# The script refuses to run if the rubric hash drifts.
+JUDGE_SPEC = {
+    "model": MOLAB_MODEL,
+    "prompt_sha256": "6a20455dcc923353bf3c5544af869cc9689a31acd2fdf6978ace11aca635f417",
+    "decoding": {"temperature": 0.0, "do_sample": False, "thinking": "OFF",
+                 "max_new_tokens": 200, "max_body_chars": 900},
+    "min_kappa_gate": 0.70,  # audit FAILS below this — do not ship verdicts
+}
+
+
+def assert_rubric_frozen() -> None:
+    """Fail loudly if the judging rubric changed without a re-audit."""
+    import hashlib as _hl
+    from pipeline.llm_labeler import PROMPT_SYSTEM as _PS
+    digest = _hl.sha256(_PS.encode()).hexdigest()
+    if digest != JUDGE_SPEC["prompt_sha256"]:
+        raise RuntimeError(
+            "Rubric drift detected: PROMPT_SYSTEM hash changed. "
+            "Freeze violated — update JUDGE_SPEC and re-run 14_audit_judge.py."
+        )
 CACHE_DIR = DATA_PROCESSED / "gpu_judge_cache"
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
 MAX_BODY_CHARS = 900
@@ -51,6 +77,10 @@ def _cache_path(model: str, url: str) -> Path:
 def run(model: str = DEFAULT_MODEL, limit: int | None = None, quant_4bit: bool = True) -> pd.DataFrame:
     if not torch.cuda.is_available():
         raise RuntimeError("No CUDA GPU — use pipeline/12_local_judge.py (CPU) instead.")
+    if model == JUDGE_SPEC["model"]:
+        assert_rubric_frozen()
+    else:
+        logger.warning(f"Non-frozen model {model} — verdicts are experimental, not citable.")
     bodies = pd.read_parquet(DATA_FINAL / "article_bodies.parquet")
     df = bodies[bodies["word_count_scraped"] > 50].copy()
     if limit:

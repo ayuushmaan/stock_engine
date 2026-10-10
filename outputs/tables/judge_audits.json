@@ -1,0 +1,24 @@
+[
+  {
+    "timestamp": "2026-10-10 21:12:57",
+    "tag": "qwen3-32b",
+    "verdicts": "data\\final\\gpu_judge_annotations.parquet",
+    "model": "gpu:Qwen/Qwen3-32B",
+    "n": 129,
+    "kappa": 0.7523,
+    "f1": 0.807,
+    "min_kappa_gate": 0.7,
+    "pass": true
+  },
+  {
+    "timestamp": "2026-10-10 21:13:02",
+    "tag": "local-nli",
+    "verdicts": "data\\final\\local_judge_annotations.parquet",
+    "model": "local:typeform/distilbert-base-uncased-mnli",
+    "n": 149,
+    "kappa": -0.0308,
+    "f1": 0.225,
+    "min_kappa_gate": 0.0,
+    "pass": false
+  }
+]
