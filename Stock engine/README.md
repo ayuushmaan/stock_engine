@@ -116,7 +116,7 @@ The system analyzes how press releases diffuse across media channels:
 ### 1. Installation
 ```bash
 git clone https://github.com/ayuushmaan/stock_engine.git
-cd stock_engine   # repo root IS the project (no nested folder)
+cd stock_engine/Stock engine   # project lives in the Stock engine/ subfolder
 python -m venv .venv
 source .venv/bin/activate   # On Windows: .venv\Scripts\activate
 pip install -r requirements.txt

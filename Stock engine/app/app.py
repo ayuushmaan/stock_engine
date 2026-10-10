@@ -62,6 +62,7 @@ app_mode = st.sidebar.radio(
         "Signal Screener",
         "Article Inspector",
         "Factor Backtest",
+        "Paper Trading (Fake INR)",
         "Propagation Network",
         "Model Validation",
     ],
@@ -220,6 +221,45 @@ elif app_mode == "Factor Backtest":
         st.metric("Daily Turnover", f"{metrics.daily_turnover:.1f}%")
 
     st.image("outputs/figures/backtest_equity_curve.png", caption="Cumulative Wealth & Drawdown Curves")
+
+# -------------------------------------------------------------
+# TAB: Paper Trading (Fake INR virtual ledger)
+# -------------------------------------------------------------
+elif app_mode == "Paper Trading (Fake INR)":
+    st.subheader("Paper Trading Diary — Virtual Capital, No Execution")
+    st.caption("Logged predictions (`predict`) scored against realized forwards (`score`). "
+               "Fake currency only. Run `python pipeline/15_paper_trade.py predict/score` to update.")
+
+    _sb = Path("outputs/tables/paper_scoreboard.json")
+    _eq = Path("outputs/tables/paper_equity.json")
+    _pr = Path("data/final/paper_predictions.parquet")
+    if not _sb.exists():
+        st.error("No scoreboard yet. Run `python pipeline/15_paper_trade.py predict` then `score`.")
+        st.stop()
+    sb = json.load(open(_sb, encoding="utf-8"))
+    m1, m2, m3, m4 = st.columns(4)
+    with m1:
+        st.metric("Virtual Value (INR, fake)", f"₹{sb.get('virtual_value_now', 0):,.0f}",
+                  f"{sb.get('virtual_return_pct', 0):+.2f}%")
+    with m2:
+        st.metric("Hit Rate", f"{100 * sb.get('hit_rate', 0):.1f}%", f"{sb.get('n_scored', 0)} scored")
+    with m3:
+        st.metric("Max Drawdown", f"{sb.get('virtual_max_drawdown_pct', 0):.1f}%")
+    with m4:
+        st.metric("Scored Days", f"{sb.get('n_days', 0)}", "ann. suppressed < 20")
+    st.json({k: v for k, v in sb.items() if k != "note"})
+    st.caption(sb.get("note", ""))
+    if _eq.exists():
+        eq = json.load(open(_eq, encoding="utf-8"))
+        df_eq = pd.DataFrame(eq.get("curve", []))
+        if not df_eq.empty:
+            df_eq["date"] = pd.to_datetime(df_eq["date"])
+            st.line_chart(df_eq.set_index("date")["virtual_value"])
+    if _pr.exists():
+        st.markdown("### Logged Predictions")
+        st.dataframe(pd.read_parquet(_pr).sort_values("predict_date", ascending=False).head(100),
+                     use_container_width=True, hide_index=True)
+
 
 # -------------------------------------------------------------
 # TAB 4: Propagation Network

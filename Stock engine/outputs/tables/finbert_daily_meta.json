@@ -1,0 +1,11 @@
+{
+  "model": "ProsusAI/finbert",
+  "device": "cuda",
+  "n_input": 18292,
+  "parse_rate": 1.0,
+  "n_daily_cells": 922,
+  "median_articles_per_cell": 9.0,
+  "date_min": "2020-01-01 00:00:00",
+  "date_max": "2020-02-03 00:00:00",
+  "caveats": "URL-slug pseudo-titles, not headlines; coverage bounded by sponsored_scores.parquet; ProsusAI/finbert .bin blocked on torch<2.6."
+}
