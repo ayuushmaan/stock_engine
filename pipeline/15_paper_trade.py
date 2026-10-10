@@ -75,7 +75,7 @@ def predict(asof: str | None = None, top_n: int = 5) -> pd.DataFrame:
     return out
 
 
-def score() -> dict:
+def score(bankroll: float = 1_000_000.0) -> dict:
     if not PRED_PATH.exists():
         raise FileNotFoundError("No predictions logged yet — run `predict` first.")
     preds = pd.read_parquet(PRED_PATH)
@@ -91,8 +91,23 @@ def score() -> dict:
     if scored.empty:
         return {"n_scored": 0, "note": "predictions too recent — forwards not realized yet"}
     scored["pnl_side"] = np.where(scored["side"] == "LONG", scored["fwd1"], -scored["fwd1"])
-    by_day = scored.groupby("predict_date")["pnl_side"].mean()
+    by_day = scored.groupby("predict_date")["pnl_side"].mean().sort_index()
+    # virtual capital ledger: equal-weight across the day's paper positions,
+    # long-short book, compounded daily. Fake currency — no execution.
+    equity = float(bankroll) * (1.0 + by_day).cumprod()
+    peak = equity.cummax()
+    dd = (equity - peak) / peak
+    curve = [{"date": d.strftime("%Y-%m-%d"), "virtual_value": round(float(v), 2)}
+             for d, v in equity.items()]
+    (OUTPUTS_TABLES / "paper_equity.json").write_text(json.dumps({
+        "bankroll_start": bankroll, "currency": "VIRTUAL-INR (fake)",
+        "curve": curve,
+    }, indent=2))
     res = {
+        "virtual_bankroll_start": bankroll,
+        "virtual_value_now": round(float(equity.iloc[-1]), 2),
+        "virtual_return_pct": round(float(equity.iloc[-1] / bankroll - 1) * 100, 2),
+        "virtual_max_drawdown_pct": round(float(dd.min() * 100), 2),
         "n_predictions": len(preds), "n_scored": len(scored),
         "n_days": len(by_day),
         "hit_rate": round(float((scored["pnl_side"] > 0).mean()), 4),
@@ -108,10 +123,12 @@ def score() -> dict:
 
 
 def parse_args() -> argparse.Namespace:
-    p = argparse.ArgumentParser(description="Paper-trading prediction diary.")
+    p = argparse.ArgumentParser(description="Paper-trading prediction diary (fake currency).")
     p.add_argument("mode", choices=["predict", "score"])
     p.add_argument("--date", default=None)
     p.add_argument("--top-n", type=int, default=5)
+    p.add_argument("--bankroll", type=float, default=1_000_000.0,
+                   help="Virtual starting capital (fake INR)")
     return p.parse_args()
 
 
@@ -120,4 +137,4 @@ if __name__ == "__main__":
     if a.mode == "predict":
         predict(a.date, a.top_n)
     else:
-        print(json.dumps(score(), indent=2))
+        print(json.dumps(score(a.bankroll), indent=2))

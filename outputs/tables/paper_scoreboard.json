@@ -1,4 +1,8 @@
 {
+  "virtual_bankroll_start": 1000000.0,
+  "virtual_value_now": 1005687.46,
+  "virtual_return_pct": 0.57,
+  "virtual_max_drawdown_pct": 0.0,
   "n_predictions": 10,
   "n_scored": 10,
   "n_days": 1,
