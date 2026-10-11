@@ -1,11 +1,12 @@
 {
   "model": "ProsusAI/finbert",
   "device": "cuda",
-  "n_input": 1348578,
-  "parse_rate": 1.0,
+  "n_input": 1397568,
+  "parse_rate": 0.9649,
   "n_daily_cells": 66396,
   "median_articles_per_cell": 8.0,
   "date_min": "2020-01-01 00:00:00",
   "date_max": "2026-04-01 00:00:00",
-  "caveats": "URL-slug pseudo-titles, not headlines; coverage bounded by sponsored_scores.parquet; ProsusAI/finbert .bin blocked on torch<2.6."
+  "caveats": "URL-slug pseudo-titles, not headlines; coverage bounded by sponsored_scores.parquet; ProsusAI/finbert .bin blocked on torch<2.6.",
+  "parse_correction_note": "parse_rate recomputed from sharded article scores (code bug divided by post-filter n); run logs confirm 96.5pct"
 }

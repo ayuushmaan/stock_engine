@@ -126,8 +126,10 @@ def run(limit: int | None = None, full: bool = True) -> pd.DataFrame:
     logger.info(f"Input articles: {len(df):,}")
 
     df["pseudo_title"] = df[url_col].apply(extract_title_from_url)
+    n_input = len(df)
     n_parse = int(df["pseudo_title"].notna().sum())
-    logger.info(f"Slug parse success: {n_parse:,}/{len(df):,} ({100*n_parse/len(df):.1f}%)")
+    parse_rate = n_parse / n_input if n_input else 0.0
+    logger.info(f"Slug parse success: {n_parse:,}/{n_input:,} ({100*parse_rate:.1f}%)")
     df = df[df["pseudo_title"].notna()].copy()
     if df.empty:
         raise RuntimeError("Zero parseable pseudo-titles.")
@@ -179,7 +181,7 @@ def run(limit: int | None = None, full: bool = True) -> pd.DataFrame:
 
     meta = {
         "model": name, "device": str(device),
-        "n_input": len(df), "parse_rate": round(n_parse / len(df), 4) if len(df) else 0.0,
+        "n_input": n_input, "parse_rate": round(parse_rate, 4),
         "n_daily_cells": len(daily),
         "median_articles_per_cell": float(daily["n_articles"].median()) if len(daily) else 0.0,
         "date_min": str(daily["effective_date"].min()) if len(daily) else None,
