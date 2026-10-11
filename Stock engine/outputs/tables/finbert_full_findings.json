@@ -29,5 +29,23 @@
   "pred_CLOSED_POST": {
     "n": 446525,
     "spearman": 0.0001
+  },
+  "full_sample_dailyIC": {
+    "n_daily_cells": 66396,
+    "n_merged": 61553,
+    "coverage": [
+      "2020-01-01 00:00:00",
+      "2026-04-01 00:00:00"
+    ],
+    "dailyIC_vs_fwd1": {
+      "mean_ic": 0.0082,
+      "t": 1.93,
+      "ndays": 1528
+    },
+    "dailyIC_vs_fwd_ovn": {
+      "mean_ic": 0.0005,
+      "t": 0.11,
+      "ndays": 1528
+    }
   }
 }
