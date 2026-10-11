@@ -7,8 +7,10 @@
 > [!WARNING]
 > **Reproduction status (Oct 2026, active repair):** the benchmark table below is a
 > **research target / aspirational snapshot, not the current on-disk result.**
-> Current `outputs/tables/five_baselines_benchmark.json` shows all 5 baselines
-> with `mean IC ~0.004-0.010, FDR p ~0.60 (not significant)`, `factor_backtest_metrics.json`
+> Current `outputs/tables/five_baselines_benchmark.json` (regenerated Oct 2026,
+> article-level, 17k articles / 24 dates, real FinBERT + real forwards) shows all
+> 5 baselines with `mean IC ~0.010-0.017, FDR p ~0.43 (not significant)`,
+> `factor_backtest_metrics.json`
 > is invalid (synthetic fallback, Sharpe ~85), and `human_vs_llm kappa = 0.0`.
 > We are fixing this in public: fail-loud on missing data, no synthetic returns,
 > predictive-only (no same-day) evaluation. See `outputs/tables/` as ground truth.

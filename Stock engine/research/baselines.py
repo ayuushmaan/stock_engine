@@ -92,7 +92,7 @@ def evaluate_five_baselines(master_df: pd.DataFrame) -> Dict[str, Any]:
     if "finbert_sentiment" not in df.columns:
         raise FileNotFoundError(
             "Missing 'finbert_sentiment' — refusing to proxy FinBERT as tone*0.9+noise. "
-            "Run research/05_finbert_validation.py to generate real FinBERT scores first."
+            "Run research/finbert_daily.py to generate real FinBERT scores first."
         )
     df["sig_2_finbert"] = df["finbert_sentiment"]
 
@@ -197,21 +197,67 @@ def save_baselines_report(results: Dict[str, Any], out_path: Path):
 
 
 def run_baselines():
-    """Main execution entry point."""
-    master_path = DATA_FINAL / "master_panel.parquet"
-    if not master_path.exists():
-        master_path = DATA_PROCESSED / "sponsored_scores.parquet"
+    """Main execution entry point.
 
-    if master_path.exists():
-        df = pd.read_parquet(master_path)
-    else:
+    Apples-to-apples design: all 5 architectures evaluated on the SAME
+    article-level panel (sponsored_scores + real FinBERT scores + real
+    next-day forwards). Coverage is bounded by the scored subset
+    (~Jan-Feb 2020) and reported in the JSON — no silent sample shifts.
+    """
+    from config.settings import DATA_FINAL as _DF
+    base_path = DATA_PROCESSED / "sponsored_scores.parquet"
+    if not base_path.exists():
         raise FileNotFoundError(
-            f"Master panel not found at {master_path} (tried DATA_FINAL/master_panel.parquet "
-            "and DATA_PROCESSED/sponsored_scores.parquet). Refusing to synthesize test data."
+            f"{base_path} missing — run pipeline steps 01-04 first. "
+            "Refusing to synthesize test data."
         )
+    df = pd.read_parquet(base_path)
+    if "tone_score" not in df.columns and "tone" in df.columns:
+        df["tone_score"] = df["tone"]
+    url_col = "DocumentIdentifier" if "DocumentIdentifier" in df.columns else "source_url"
+
+    art_path = DATA_PROCESSED / "finbert_article_scores.parquet"
+    if not art_path.exists():
+        raise FileNotFoundError(
+            f"{art_path} missing — run research/finbert_daily.py first. "
+            "Refusing to proxy FinBERT."
+        )
+    art = pd.read_parquet(art_path)
+    a_url = "DocumentIdentifier" if "DocumentIdentifier" in art.columns else "source_url"
+    df["effective_date"] = pd.to_datetime(df["effective_date"])
+    art["effective_date"] = pd.to_datetime(art["effective_date"])
+    # Same URL can match multiple tickers (03_label_news explodes rows),
+    # so the join key is (url, date, ticker).
+    df = df.merge(art[[a_url, "effective_date", "ticker", "finbert_sentiment"]].rename(
+        columns={a_url: url_col}),
+        on=[url_col, "effective_date", "ticker"], how="inner",
+        validate="many_to_one")
+    logger.info(f"FinBERT merge coverage: {len(df):,} articles with real scores.")
+
+    master = pd.read_parquet(_DF / "master_dataset.parquet")
+    dcol = "date" if "date" in master.columns else "effective_date"
+    master[dcol] = pd.to_datetime(master[dcol])
+    master = master.sort_values(["ticker", dcol])
+    master["ret_fwd_1d"] = master.groupby("ticker")["ret_close2close"].shift(-1)
+    df = df.merge(master[["ticker", dcol, "ret_fwd_1d"]].rename(
+        columns={dcol: "effective_date"}),
+        on=["ticker", "effective_date"], how="inner")
+    df = df.dropna(subset=["ret_fwd_1d"]).reset_index(drop=True)
+    logger.info(f"Eval panel: {len(df):,} articles, "
+                f"{df['effective_date'].nunique()} dates after forward join.")
 
     results = evaluate_five_baselines(df)
+    design = {
+        "grain": "article-level (one row per article, cross-section over articles per date)",
+        "forward": "ret_fwd_1d = next trading day close-to-close per ticker",
+        "finbert_source": "ProsusAI/finbert on URL-slug pseudo-titles (research/finbert_daily.py)",
+        "coverage": "bounded by sponsored_scores panel; see ndays per baseline",
+    }
     save_baselines_report(results, OUTPUTS_TABLES / "five_baselines_benchmark.json")
+    out_json = OUTPUTS_TABLES / "five_baselines_benchmark.json"
+    payload = json.loads(out_json.read_text())
+    payload["_eval_design"] = design
+    out_json.write_text(json.dumps(payload, indent=2))
 
 
 if __name__ == "__main__":

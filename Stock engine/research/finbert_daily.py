@@ -133,12 +133,41 @@ def run(limit: int | None = None, full: bool = True) -> pd.DataFrame:
         raise RuntimeError("Zero parseable pseudo-titles.")
 
     name, tok, mdl, device = load_transformer()
-    df["finbert_sentiment"] = score_texts(df["pseudo_title"].tolist(), tok, mdl, device)
+    # Sharded scoring: each 200k-article shard checkpoints to disk so
+    # interrupted runs resume instead of restarting (1.3M rows ≈ 1h+).
+    from config.settings import DATA_PROCESSED as _DP
+    shard_dir = _DP / f"finbert_shards_{src.stem}"
+    shard_dir.mkdir(parents=True, exist_ok=True)
+    shard_size = 200_000
+    df = df.reset_index(drop=True)
+    n_shards = (len(df) + shard_size - 1) // shard_size
+    parts = []
+    for s in range(n_shards):
+        sp = shard_dir / f"shard_{s:03d}.parquet"
+        if sp.exists():
+            logger.info(f"Shard {s+1}/{n_shards}: cached, skipping.")
+            parts.append(pd.read_parquet(sp))
+            continue
+        sl = df.iloc[s * shard_size:(s + 1) * shard_size]
+        logger.info(f"Shard {s+1}/{n_shards}: scoring {len(sl):,} articles...")
+        sl = sl.copy()
+        sl["finbert_sentiment"] = score_texts(sl["pseudo_title"].tolist(), tok, mdl, device)
+        keep = ["ticker", "effective_date", "time_bucket", "pseudo_title",
+                "tone_score", "finbert_sentiment"]
+        if url_col in sl.columns:
+            keep.insert(0, url_col)
+        sl[keep].to_parquet(sp, index=False)
+        parts.append(sl)
+        logger.info(f"Shard {s+1}/{n_shards}: checkpointed.")
+    df = pd.concat(parts, ignore_index=True)
     logger.info(f"finbert_sentiment describe:\n{df['finbert_sentiment'].describe().to_string()}")
 
     art_path = DATA_PROCESSED / "finbert_article_scores.parquet"
-    df[["ticker", "effective_date", "time_bucket", "pseudo_title",
-        "tone_score", "finbert_sentiment"]].to_parquet(art_path, index=False)
+    art_cols = ["ticker", "effective_date", "time_bucket", "pseudo_title",
+                "tone_score", "finbert_sentiment"]
+    if url_col in df.columns and url_col not in art_cols:
+        art_cols.insert(0, url_col)
+    df[art_cols].to_parquet(art_path, index=False)
 
     df["effective_date"] = pd.to_datetime(df["effective_date"])
     daily = (df.groupby(["effective_date", "ticker"])

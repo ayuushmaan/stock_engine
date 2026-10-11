@@ -1,0 +1,33 @@
+{
+  "n": 1000000,
+  "finbert_vs_gdelt_tone": {
+    "pearson": 0.31,
+    "spearman": 0.3593
+  },
+  "corr_OPEN": {
+    "n": 348548,
+    "pearson": 0.2761
+  },
+  "corr_CLOSED_PRE": {
+    "n": 164509,
+    "pearson": 0.3578
+  },
+  "corr_CLOSED_POST": {
+    "n": 486943,
+    "pearson": 0.3218
+  },
+  "predictive_merge_n": 924666,
+  "finbert_vs_fwd1_spearman": 0.0035,
+  "pred_OPEN": {
+    "n": 324776,
+    "spearman": 0.0068
+  },
+  "pred_CLOSED_PRE": {
+    "n": 153365,
+    "spearman": 0.0064
+  },
+  "pred_CLOSED_POST": {
+    "n": 446525,
+    "spearman": 0.0001
+  }
+}
