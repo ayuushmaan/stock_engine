@@ -45,11 +45,11 @@ TRAIN_END = "2023-12-31"
 VALIDATION_START = "2024-01-01"
 VALIDATION_END = "2024-06-30"
 HOLDOUT_START = "2024-07-01"
-HOLDOUT_END = "2026-03-31"
+HOLDOUT_END = "2026-09-30"
 
 # Full data range for price & GDELT fetching
 FETCH_START = "2019-12-01"
-FETCH_END = "2026-03-31"
+FETCH_END = "2026-09-30"
 
 # ============================================================
 # MARKET PARAMETERS  (IST timezone)
