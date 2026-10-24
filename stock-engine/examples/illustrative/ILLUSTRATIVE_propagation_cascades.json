@@ -1,0 +1,1432 @@
+[
+  {
+    "cluster_id": "CASCADE_2024000",
+    "ticker": "TATAMOTORS",
+    "origin_domain": "economictimes.indiatimes.com",
+    "origin_is_pr_wire": false,
+    "total_articles": 3,
+    "unique_domains": 3,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 75.3,
+    "tone_attenuation_ratio": 0.35,
+    "nodes": [
+      {
+        "domain": "economictimes.indiatimes.com",
+        "tier": 1,
+        "first_publish_min": 0.0,
+        "tone": 1.3919636508684308,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "ndtv.com",
+        "tier": 2,
+        "first_publish_min": 30.60414634987569,
+        "tone": 1.0091649178122242,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "business-standard.com",
+        "tier": 1,
+        "first_publish_min": 120.06755000502393,
+        "tone": 0.4871919913724322,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024001",
+    "ticker": "INFY",
+    "origin_domain": "businesswire.com",
+    "origin_is_pr_wire": true,
+    "total_articles": 5,
+    "unique_domains": 5,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 67.5,
+    "tone_attenuation_ratio": 0.641,
+    "nodes": [
+      {
+        "domain": "businesswire.com",
+        "tier": 3,
+        "first_publish_min": 0.0,
+        "tone": 6.5269957029338865,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "dailyhunt.in",
+        "tier": 2,
+        "first_publish_min": 21.36387385224852,
+        "tone": 4.868167103981734,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "devdiscourse.com",
+        "tier": 2,
+        "first_publish_min": 25.64847850358382,
+        "tone": 5.425167735641354,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "livemint.com",
+        "tier": 1,
+        "first_publish_min": 154.45943884651004,
+        "tone": 2.8715605063349203,
+        "hop_level": 2,
+        "is_seed": false
+      },
+      {
+        "domain": "financialexpress.com",
+        "tier": 1,
+        "first_publish_min": 68.39981937845077,
+        "tone": 4.182593041395393,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024002",
+    "ticker": "TATAMOTORS",
+    "origin_domain": "economictimes.indiatimes.com",
+    "origin_is_pr_wire": false,
+    "total_articles": 6,
+    "unique_domains": 6,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 58.0,
+    "tone_attenuation_ratio": 0.539,
+    "nodes": [
+      {
+        "domain": "economictimes.indiatimes.com",
+        "tier": 1,
+        "first_publish_min": 0.0,
+        "tone": 0.7103160559985238,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "ndtv.com",
+        "tier": 2,
+        "first_publish_min": 45.09791423577122,
+        "tone": 0.6180295811179004,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "cnbctv18.com",
+        "tier": 2,
+        "first_publish_min": 30.767473818934004,
+        "tone": 0.49957681792247915,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "moneycontrol.com",
+        "tier": 2,
+        "first_publish_min": 47.97706144896985,
+        "tone": 0.5972494055215868,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "thehindubusinessline.com",
+        "tier": 1,
+        "first_publish_min": 62.87392539963855,
+        "tone": 0.27049747384917466,
+        "hop_level": 2,
+        "is_seed": false
+      },
+      {
+        "domain": "business-standard.com",
+        "tier": 1,
+        "first_publish_min": 103.38458388468212,
+        "tone": 0.38296138356447756,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024003",
+    "ticker": "HDFCBANK",
+    "origin_domain": "economictimes.indiatimes.com",
+    "origin_is_pr_wire": false,
+    "total_articles": 4,
+    "unique_domains": 4,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 138.4,
+    "tone_attenuation_ratio": 0.457,
+    "nodes": [
+      {
+        "domain": "economictimes.indiatimes.com",
+        "tier": 1,
+        "first_publish_min": 0.0,
+        "tone": -1.9598120789533675,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "moneycontrol.com",
+        "tier": 2,
+        "first_publish_min": 41.437649361117835,
+        "tone": -1.580174859833838,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "business-standard.com",
+        "tier": 1,
+        "first_publish_min": 162.18605900759846,
+        "tone": -0.6094224827611813,
+        "hop_level": 2,
+        "is_seed": false
+      },
+      {
+        "domain": "thehindubusinessline.com",
+        "tier": 1,
+        "first_publish_min": 211.61125942709972,
+        "tone": -0.896445377784055,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024004",
+    "ticker": "TCS",
+    "origin_domain": "bloomberg.com",
+    "origin_is_pr_wire": false,
+    "total_articles": 5,
+    "unique_domains": 5,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 70.2,
+    "tone_attenuation_ratio": 0.397,
+    "nodes": [
+      {
+        "domain": "bloomberg.com",
+        "tier": 1,
+        "first_publish_min": 0.0,
+        "tone": 1.3636319751385253,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "cnbctv18.com",
+        "tier": 2,
+        "first_publish_min": 33.22919910090383,
+        "tone": 1.282213609099817,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "moneycontrol.com",
+        "tier": 2,
+        "first_publish_min": 44.558684703735295,
+        "tone": 1.209309782058812,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "ndtv.com",
+        "tier": 2,
+        "first_publish_min": 33.88922463361779,
+        "tone": 1.154570545334224,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "business-standard.com",
+        "tier": 1,
+        "first_publish_min": 169.26616458360326,
+        "tone": 0.5408160509428639,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024005",
+    "ticker": "ICICIBANK",
+    "origin_domain": "reuters.com",
+    "origin_is_pr_wire": false,
+    "total_articles": 3,
+    "unique_domains": 3,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 106.7,
+    "tone_attenuation_ratio": 0.577,
+    "nodes": [
+      {
+        "domain": "reuters.com",
+        "tier": 1,
+        "first_publish_min": 0.0,
+        "tone": -2.906181559552836,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "cnbctv18.com",
+        "tier": 2,
+        "first_publish_min": 25.272086115131334,
+        "tone": -2.0445567219710727,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "thehindubusinessline.com",
+        "tier": 1,
+        "first_publish_min": 188.041551494757,
+        "tone": -1.6755922225113704,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024006",
+    "ticker": "INFY",
+    "origin_domain": "newsvoir.com",
+    "origin_is_pr_wire": true,
+    "total_articles": 6,
+    "unique_domains": 6,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 86.1,
+    "tone_attenuation_ratio": 0.566,
+    "nodes": [
+      {
+        "domain": "newsvoir.com",
+        "tier": 3,
+        "first_publish_min": 0.0,
+        "tone": 6.278769589256806,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "devdiscourse.com",
+        "tier": 2,
+        "first_publish_min": 30.730773594837117,
+        "tone": 4.544903246961624,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "latestly.com",
+        "tier": 2,
+        "first_publish_min": 27.978638826939324,
+        "tone": 5.445013741795935,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "dailyhunt.in",
+        "tier": 2,
+        "first_publish_min": 38.30728248161238,
+        "tone": 5.32329435439329,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "livemint.com",
+        "tier": 1,
+        "first_publish_min": 144.99868652915086,
+        "tone": 2.1464475268336694,
+        "hop_level": 2,
+        "is_seed": false
+      },
+      {
+        "domain": "economictimes.indiatimes.com",
+        "tier": 1,
+        "first_publish_min": 188.3840617001391,
+        "tone": 3.555508786303004,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024007",
+    "ticker": "TCS",
+    "origin_domain": "businesswire.com",
+    "origin_is_pr_wire": true,
+    "total_articles": 3,
+    "unique_domains": 3,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 96.7,
+    "tone_attenuation_ratio": 0.41,
+    "nodes": [
+      {
+        "domain": "businesswire.com",
+        "tier": 3,
+        "first_publish_min": 0.0,
+        "tone": 5.728284587275367,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "latestly.com",
+        "tier": 2,
+        "first_publish_min": 18.881178728414096,
+        "tone": 4.638960339159048,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "economictimes.indiatimes.com",
+        "tier": 1,
+        "first_publish_min": 174.55387402748048,
+        "tone": 2.3487375586436823,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024008",
+    "ticker": "HDFCBANK",
+    "origin_domain": "economictimes.indiatimes.com",
+    "origin_is_pr_wire": false,
+    "total_articles": 5,
+    "unique_domains": 5,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 78.1,
+    "tone_attenuation_ratio": 0.581,
+    "nodes": [
+      {
+        "domain": "economictimes.indiatimes.com",
+        "tier": 1,
+        "first_publish_min": 0.0,
+        "tone": 0.6265042756669033,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "ndtv.com",
+        "tier": 2,
+        "first_publish_min": 23.007935792206787,
+        "tone": 0.4506100536288801,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "moneycontrol.com",
+        "tier": 2,
+        "first_publish_min": 25.14130085198188,
+        "tone": 0.4638044494151212,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "cnbctv18.com",
+        "tier": 2,
+        "first_publish_min": 47.53941783199006,
+        "tone": 0.5651257112294993,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "thehindubusinessline.com",
+        "tier": 1,
+        "first_publish_min": 216.86290623378918,
+        "tone": 0.3641776800440594,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024009",
+    "ticker": "HDFCBANK",
+    "origin_domain": "bloomberg.com",
+    "origin_is_pr_wire": false,
+    "total_articles": 4,
+    "unique_domains": 4,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 58.5,
+    "tone_attenuation_ratio": 0.407,
+    "nodes": [
+      {
+        "domain": "bloomberg.com",
+        "tier": 1,
+        "first_publish_min": 0.0,
+        "tone": 0.23605345149390455,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "moneycontrol.com",
+        "tier": 2,
+        "first_publish_min": 27.470424332694122,
+        "tone": 0.2187524119306616,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "ndtv.com",
+        "tier": 2,
+        "first_publish_min": 24.524628728462236,
+        "tone": 0.2034597881588061,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "business-standard.com",
+        "tier": 1,
+        "first_publish_min": 123.46239414015042,
+        "tone": 0.0959966692267715,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024010",
+    "ticker": "ITC",
+    "origin_domain": "reuters.com",
+    "origin_is_pr_wire": false,
+    "total_articles": 4,
+    "unique_domains": 4,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 101.9,
+    "tone_attenuation_ratio": 0.64,
+    "nodes": [
+      {
+        "domain": "reuters.com",
+        "tier": 1,
+        "first_publish_min": 0.0,
+        "tone": -0.09102017184610078,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "moneycontrol.com",
+        "tier": 2,
+        "first_publish_min": 26.81653099912698,
+        "tone": -0.08517007111363892,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "business-standard.com",
+        "tier": 1,
+        "first_publish_min": 153.3823119138059,
+        "tone": -0.049702168811227326,
+        "hop_level": 2,
+        "is_seed": false
+      },
+      {
+        "domain": "thehindubusinessline.com",
+        "tier": 1,
+        "first_publish_min": 125.45332842827291,
+        "tone": -0.058264171812008485,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024011",
+    "ticker": "HDFCBANK",
+    "origin_domain": "newsvoir.com",
+    "origin_is_pr_wire": true,
+    "total_articles": 4,
+    "unique_domains": 4,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 114.2,
+    "tone_attenuation_ratio": 0.384,
+    "nodes": [
+      {
+        "domain": "newsvoir.com",
+        "tier": 3,
+        "first_publish_min": 0.0,
+        "tone": 5.740369770623349,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "latestly.com",
+        "tier": 2,
+        "first_publish_min": 49.92091697671297,
+        "tone": 4.401114256866864,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "economictimes.indiatimes.com",
+        "tier": 1,
+        "first_publish_min": 69.26617522499808,
+        "tone": 2.2819477401852284,
+        "hop_level": 2,
+        "is_seed": false
+      },
+      {
+        "domain": "financialexpress.com",
+        "tier": 1,
+        "first_publish_min": 223.48785947399767,
+        "tone": 2.2034217735693273,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024012",
+    "ticker": "TCS",
+    "origin_domain": "bloomberg.com",
+    "origin_is_pr_wire": false,
+    "total_articles": 5,
+    "unique_domains": 5,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 81.0,
+    "tone_attenuation_ratio": 0.353,
+    "nodes": [
+      {
+        "domain": "bloomberg.com",
+        "tier": 1,
+        "first_publish_min": 0.0,
+        "tone": 2.913902724663604,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "ndtv.com",
+        "tier": 2,
+        "first_publish_min": 27.937905962149156,
+        "tone": 2.2161395332522633,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "moneycontrol.com",
+        "tier": 2,
+        "first_publish_min": 43.10989147329636,
+        "tone": 2.382334482295356,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "cnbctv18.com",
+        "tier": 2,
+        "first_publish_min": 49.419809931319506,
+        "tone": 2.330265814639929,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "business-standard.com",
+        "tier": 1,
+        "first_publish_min": 203.7021224972192,
+        "tone": 1.027882509104496,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024013",
+    "ticker": "INFY",
+    "origin_domain": "prnewswire.com",
+    "origin_is_pr_wire": true,
+    "total_articles": 6,
+    "unique_domains": 6,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 91.5,
+    "tone_attenuation_ratio": 0.607,
+    "nodes": [
+      {
+        "domain": "prnewswire.com",
+        "tier": 3,
+        "first_publish_min": 0.0,
+        "tone": 7.004255816848019,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "dailyhunt.in",
+        "tier": 2,
+        "first_publish_min": 32.92325704047484,
+        "tone": 5.299587659524027,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "latestly.com",
+        "tier": 2,
+        "first_publish_min": 37.58104766433075,
+        "tone": 5.20830584044892,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "devdiscourse.com",
+        "tier": 2,
+        "first_publish_min": 39.182820833586305,
+        "tone": 5.580177396520181,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "livemint.com",
+        "tier": 1,
+        "first_publish_min": 121.39194318904653,
+        "tone": 2.379455894977074,
+        "hop_level": 2,
+        "is_seed": false
+      },
+      {
+        "domain": "financialexpress.com",
+        "tier": 1,
+        "first_publish_min": 226.4448512901413,
+        "tone": 4.2520649892983515,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024014",
+    "ticker": "INFY",
+    "origin_domain": "businesswire.com",
+    "origin_is_pr_wire": true,
+    "total_articles": 3,
+    "unique_domains": 3,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 69.6,
+    "tone_attenuation_ratio": 0.422,
+    "nodes": [
+      {
+        "domain": "businesswire.com",
+        "tier": 3,
+        "first_publish_min": 0.0,
+        "tone": 7.437589201653024,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "devdiscourse.com",
+        "tier": 2,
+        "first_publish_min": 18.25859687320647,
+        "tone": 6.874592999383766,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "livemint.com",
+        "tier": 1,
+        "first_publish_min": 121.02536238876613,
+        "tone": 3.140323836934448,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024015",
+    "ticker": "INFY",
+    "origin_domain": "bloomberg.com",
+    "origin_is_pr_wire": false,
+    "total_articles": 6,
+    "unique_domains": 6,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 76.3,
+    "tone_attenuation_ratio": 0.648,
+    "nodes": [
+      {
+        "domain": "bloomberg.com",
+        "tier": 1,
+        "first_publish_min": 0.0,
+        "tone": 1.6792532751457436,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "cnbctv18.com",
+        "tier": 2,
+        "first_publish_min": 42.486922788988025,
+        "tone": 1.4563274720427464,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "ndtv.com",
+        "tier": 2,
+        "first_publish_min": 35.324031750275914,
+        "tone": 1.331766556359302,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "moneycontrol.com",
+        "tier": 2,
+        "first_publish_min": 47.90467048602225,
+        "tone": 1.5842343392926048,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "business-standard.com",
+        "tier": 1,
+        "first_publish_min": 114.96549486199082,
+        "tone": 0.7891899527016443,
+        "hop_level": 2,
+        "is_seed": false
+      },
+      {
+        "domain": "thehindubusinessline.com",
+        "tier": 1,
+        "first_publish_min": 140.71634573752453,
+        "tone": 1.0882570654225443,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024016",
+    "ticker": "HDFCBANK",
+    "origin_domain": "reuters.com",
+    "origin_is_pr_wire": false,
+    "total_articles": 6,
+    "unique_domains": 6,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 73.6,
+    "tone_attenuation_ratio": 0.423,
+    "nodes": [
+      {
+        "domain": "reuters.com",
+        "tier": 1,
+        "first_publish_min": 0.0,
+        "tone": -0.03663770889939233,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "ndtv.com",
+        "tier": 2,
+        "first_publish_min": 25.78212771483362,
+        "tone": -0.03061575398789453,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "moneycontrol.com",
+        "tier": 2,
+        "first_publish_min": 32.8084926893566,
+        "tone": -0.03147483853664538,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "cnbctv18.com",
+        "tier": 2,
+        "first_publish_min": 23.766163651195445,
+        "tone": -0.031049275329864887,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "thehindubusinessline.com",
+        "tier": 1,
+        "first_publish_min": 147.6135875327019,
+        "tone": -0.022610396936301333,
+        "hop_level": 2,
+        "is_seed": false
+      },
+      {
+        "domain": "business-standard.com",
+        "tier": 1,
+        "first_publish_min": 138.19098579187715,
+        "tone": -0.01548043744739581,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024017",
+    "ticker": "RELIANCE",
+    "origin_domain": "reuters.com",
+    "origin_is_pr_wire": false,
+    "total_articles": 3,
+    "unique_domains": 3,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 122.6,
+    "tone_attenuation_ratio": 0.634,
+    "nodes": [
+      {
+        "domain": "reuters.com",
+        "tier": 1,
+        "first_publish_min": 0.0,
+        "tone": -1.828542073211733,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "moneycontrol.com",
+        "tier": 2,
+        "first_publish_min": 15.851058825100884,
+        "tone": -1.5750477637879206,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "business-standard.com",
+        "tier": 1,
+        "first_publish_min": 229.28254518352458,
+        "tone": -1.1590671102244003,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024018",
+    "ticker": "ICICIBANK",
+    "origin_domain": "reuters.com",
+    "origin_is_pr_wire": false,
+    "total_articles": 3,
+    "unique_domains": 3,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 80.9,
+    "tone_attenuation_ratio": 0.435,
+    "nodes": [
+      {
+        "domain": "reuters.com",
+        "tier": 1,
+        "first_publish_min": 0.0,
+        "tone": 2.718431082143719,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "cnbctv18.com",
+        "tier": 2,
+        "first_publish_min": 48.832918666528435,
+        "tone": 2.557785381774114,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "business-standard.com",
+        "tier": 1,
+        "first_publish_min": 113.00080057252542,
+        "tone": 1.1819308969261628,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024019",
+    "ticker": "TATAMOTORS",
+    "origin_domain": "newsvoir.com",
+    "origin_is_pr_wire": true,
+    "total_articles": 4,
+    "unique_domains": 4,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 110.4,
+    "tone_attenuation_ratio": 0.403,
+    "nodes": [
+      {
+        "domain": "newsvoir.com",
+        "tier": 3,
+        "first_publish_min": 0.0,
+        "tone": 4.593224613401324,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "devdiscourse.com",
+        "tier": 2,
+        "first_publish_min": 44.547459925420895,
+        "tone": 4.283201283513603,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "economictimes.indiatimes.com",
+        "tier": 1,
+        "first_publish_min": 180.80583302832912,
+        "tone": 1.954538212198743,
+        "hop_level": 2,
+        "is_seed": false
+      },
+      {
+        "domain": "financialexpress.com",
+        "tier": 1,
+        "first_publish_min": 105.74945683255298,
+        "tone": 1.8526849836114674,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024020",
+    "ticker": "TCS",
+    "origin_domain": "reuters.com",
+    "origin_is_pr_wire": false,
+    "total_articles": 5,
+    "unique_domains": 5,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 51.3,
+    "tone_attenuation_ratio": 0.325,
+    "nodes": [
+      {
+        "domain": "reuters.com",
+        "tier": 1,
+        "first_publish_min": 0.0,
+        "tone": -2.180272011347827,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "ndtv.com",
+        "tier": 2,
+        "first_publish_min": 25.377855027672947,
+        "tone": -1.754999520995838,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "moneycontrol.com",
+        "tier": 2,
+        "first_publish_min": 23.967243025806034,
+        "tone": -1.8595069650324516,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "business-standard.com",
+        "tier": 1,
+        "first_publish_min": 60.93327529931762,
+        "tone": -1.1332248200522936,
+        "hop_level": 2,
+        "is_seed": false
+      },
+      {
+        "domain": "thehindubusinessline.com",
+        "tier": 1,
+        "first_publish_min": 94.9693116321676,
+        "tone": -0.7082162769323502,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024021",
+    "ticker": "ITC",
+    "origin_domain": "economictimes.indiatimes.com",
+    "origin_is_pr_wire": false,
+    "total_articles": 4,
+    "unique_domains": 4,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 77.6,
+    "tone_attenuation_ratio": 0.311,
+    "nodes": [
+      {
+        "domain": "economictimes.indiatimes.com",
+        "tier": 1,
+        "first_publish_min": 0.0,
+        "tone": -0.9720290588907852,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "moneycontrol.com",
+        "tier": 2,
+        "first_publish_min": 35.239804934866086,
+        "tone": -0.6891545748668101,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "cnbctv18.com",
+        "tier": 2,
+        "first_publish_min": 31.295930634636104,
+        "tone": -0.8122869296202844,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "business-standard.com",
+        "tier": 1,
+        "first_publish_min": 166.34998690242193,
+        "tone": -0.3019852129027013,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024022",
+    "ticker": "HDFCBANK",
+    "origin_domain": "newsvoir.com",
+    "origin_is_pr_wire": true,
+    "total_articles": 3,
+    "unique_domains": 3,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 126.8,
+    "tone_attenuation_ratio": 0.368,
+    "nodes": [
+      {
+        "domain": "newsvoir.com",
+        "tier": 3,
+        "first_publish_min": 0.0,
+        "tone": 5.26066724493942,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "devdiscourse.com",
+        "tier": 2,
+        "first_publish_min": 41.94977435845138,
+        "tone": 3.9663077239880464,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "economictimes.indiatimes.com",
+        "tier": 1,
+        "first_publish_min": 211.56415350215664,
+        "tone": 1.9360992107492898,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024023",
+    "ticker": "ITC",
+    "origin_domain": "economictimes.indiatimes.com",
+    "origin_is_pr_wire": false,
+    "total_articles": 4,
+    "unique_domains": 4,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 94.4,
+    "tone_attenuation_ratio": 0.365,
+    "nodes": [
+      {
+        "domain": "economictimes.indiatimes.com",
+        "tier": 1,
+        "first_publish_min": 0.0,
+        "tone": -2.169881445493192,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "moneycontrol.com",
+        "tier": 2,
+        "first_publish_min": 40.01082864629832,
+        "tone": -1.5411949225070076,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "thehindubusinessline.com",
+        "tier": 1,
+        "first_publish_min": 138.03373276453357,
+        "tone": -1.2160339476427808,
+        "hop_level": 2,
+        "is_seed": false
+      },
+      {
+        "domain": "business-standard.com",
+        "tier": 1,
+        "first_publish_min": 105.15489492239902,
+        "tone": -0.7909582105468861,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024024",
+    "ticker": "ITC",
+    "origin_domain": "reuters.com",
+    "origin_is_pr_wire": false,
+    "total_articles": 4,
+    "unique_domains": 4,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 106.5,
+    "tone_attenuation_ratio": 0.634,
+    "nodes": [
+      {
+        "domain": "reuters.com",
+        "tier": 1,
+        "first_publish_min": 0.0,
+        "tone": 1.130999404592198,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "moneycontrol.com",
+        "tier": 2,
+        "first_publish_min": 20.47529649348801,
+        "tone": 0.8624557254214344,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "business-standard.com",
+        "tier": 1,
+        "first_publish_min": 188.62726608601122,
+        "tone": 0.6006388153710392,
+        "hop_level": 2,
+        "is_seed": false
+      },
+      {
+        "domain": "thehindubusinessline.com",
+        "tier": 1,
+        "first_publish_min": 110.38810145026972,
+        "tone": 0.7172830437412017,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024025",
+    "ticker": "TATAMOTORS",
+    "origin_domain": "reuters.com",
+    "origin_is_pr_wire": false,
+    "total_articles": 6,
+    "unique_domains": 6,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 74.3,
+    "tone_attenuation_ratio": 0.567,
+    "nodes": [
+      {
+        "domain": "reuters.com",
+        "tier": 1,
+        "first_publish_min": 0.0,
+        "tone": 0.6703244774061137,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "moneycontrol.com",
+        "tier": 2,
+        "first_publish_min": 34.81130236729267,
+        "tone": 0.49581328346135184,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "ndtv.com",
+        "tier": 2,
+        "first_publish_min": 19.205762673197476,
+        "tone": 0.5265197114161416,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "cnbctv18.com",
+        "tier": 2,
+        "first_publish_min": 18.212967303470467,
+        "tone": 0.48500606767309357,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "business-standard.com",
+        "tier": 1,
+        "first_publish_min": 236.31189515187154,
+        "tone": 0.2422322032597994,
+        "hop_level": 2,
+        "is_seed": false
+      },
+      {
+        "domain": "thehindubusinessline.com",
+        "tier": 1,
+        "first_publish_min": 63.08899832971504,
+        "tone": 0.3801929934940147,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024026",
+    "ticker": "ICICIBANK",
+    "origin_domain": "reuters.com",
+    "origin_is_pr_wire": false,
+    "total_articles": 4,
+    "unique_domains": 4,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 104.8,
+    "tone_attenuation_ratio": 0.6,
+    "nodes": [
+      {
+        "domain": "reuters.com",
+        "tier": 1,
+        "first_publish_min": 0.0,
+        "tone": -0.21195712236233177,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "moneycontrol.com",
+        "tier": 2,
+        "first_publish_min": 36.55475343182758,
+        "tone": -0.18202314132075553,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "business-standard.com",
+        "tier": 1,
+        "first_publish_min": 127.43027063276482,
+        "tone": -0.1100165500665519,
+        "hop_level": 2,
+        "is_seed": false
+      },
+      {
+        "domain": "thehindubusinessline.com",
+        "tier": 1,
+        "first_publish_min": 150.5645265444158,
+        "tone": -0.1271258294334961,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024027",
+    "ticker": "ICICIBANK",
+    "origin_domain": "economictimes.indiatimes.com",
+    "origin_is_pr_wire": false,
+    "total_articles": 6,
+    "unique_domains": 6,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 54.7,
+    "tone_attenuation_ratio": 0.306,
+    "nodes": [
+      {
+        "domain": "economictimes.indiatimes.com",
+        "tier": 1,
+        "first_publish_min": 0.0,
+        "tone": 2.665509582751004,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "cnbctv18.com",
+        "tier": 2,
+        "first_publish_min": 37.51508764548236,
+        "tone": 2.171226075657824,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "moneycontrol.com",
+        "tier": 2,
+        "first_publish_min": 34.096587626057726,
+        "tone": 2.49322757532987,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "ndtv.com",
+        "tier": 2,
+        "first_publish_min": 28.513592323027098,
+        "tone": 2.5063723726063234,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "thehindubusinessline.com",
+        "tier": 1,
+        "first_publish_min": 95.24240426207336,
+        "tone": 0.8643619990794913,
+        "hop_level": 2,
+        "is_seed": false
+      },
+      {
+        "domain": "business-standard.com",
+        "tier": 1,
+        "first_publish_min": 78.1400402479368,
+        "tone": 0.8166525326365995,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024028",
+    "ticker": "INFY",
+    "origin_domain": "economictimes.indiatimes.com",
+    "origin_is_pr_wire": false,
+    "total_articles": 3,
+    "unique_domains": 3,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 48.5,
+    "tone_attenuation_ratio": 0.544,
+    "nodes": [
+      {
+        "domain": "economictimes.indiatimes.com",
+        "tier": 1,
+        "first_publish_min": 0.0,
+        "tone": -2.572868109238626,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "moneycontrol.com",
+        "tier": 2,
+        "first_publish_min": 15.814517750753906,
+        "tone": -2.3248876726753,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "thehindubusinessline.com",
+        "tier": 1,
+        "first_publish_min": 81.26966897189813,
+        "tone": -1.3992749244219476,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  },
+  {
+    "cluster_id": "CASCADE_2024029",
+    "ticker": "ICICIBANK",
+    "origin_domain": "reuters.com",
+    "origin_is_pr_wire": false,
+    "total_articles": 3,
+    "unique_domains": 3,
+    "max_cascade_depth": 2,
+    "mean_propagation_delay_mins": 87.8,
+    "tone_attenuation_ratio": 0.43,
+    "nodes": [
+      {
+        "domain": "reuters.com",
+        "tier": 1,
+        "first_publish_min": 0.0,
+        "tone": 1.8208855823090913,
+        "hop_level": 0,
+        "is_seed": true
+      },
+      {
+        "domain": "cnbctv18.com",
+        "tier": 2,
+        "first_publish_min": 41.27151630743004,
+        "tone": 1.6419083436258328,
+        "hop_level": 1,
+        "is_seed": false
+      },
+      {
+        "domain": "thehindubusinessline.com",
+        "tier": 1,
+        "first_publish_min": 134.27118184405677,
+        "tone": 0.7833565037651343,
+        "hop_level": 2,
+        "is_seed": false
+      }
+    ]
+  }
+]

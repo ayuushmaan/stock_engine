@@ -16,7 +16,7 @@
 
 ## circularity_audit.json
 
-- **timestamp**: 2026-10-24T20:50:38.959536
+- **timestamp**: 2026-10-24T22:30:00.917415
 - **label_script**: C:\Users\ayush\OneDrive\Desktop\Theatre\Guido\Projects\stock-engine\pipeline\03_label_news.py
 - **classifier_script**: C:\Users\ayush\OneDrive\Desktop\Theatre\Guido\Projects\stock-engine\pipeline\04_sponsored_classifier.py
 - **honest_eval_script**: C:\Users\ayush\OneDrive\Desktop\Theatre\Guido\Projects\stock-engine\pipeline\08_honest_eval.py
@@ -75,31 +75,6 @@
   ],
   "build_pass": true
 }...
-
-## cross_market_replication.json — **QUARANTINED (SIMULATED/PLACEHOLDER)**
-
-- **NIFTY 50 (India)**: {
-  "mean_ic_organic_closed": 0.0482,
-  "mean_ic_sponsored_closed": -0.0094,
-  "mean_ic_organic_open": 0.0185,
-  "mean_ic_sponsored_open": 0.0012,
-  "temporal_multiplier": 2.61,
-  "annualized_ls_sharpe": 1.48,
-  "pr_wire_drag_bps": -24.5,
-  "market_microstructure": "T+1 settlement, High retail volume participation, No pre-open dark pools"
-}...
-- **S&P 500 (US)**: {
-  "mean_ic_organic_closed": 0.0345,
-  "mean_ic_sponsored_closed": -0.0062,
-  "mean_ic_organic_open": 0.0162,
-  "mean_ic_sponsored_open": -0.0008,
-  "temporal_multiplier": 2.13,
-  "annualized_ls_sharpe": 1.15,
-  "pr_wire_drag_bps": -19.8,
-  "market_microstructure": "T+1 settlement, Extended hours ATS/electronic trading, Algorithmic price discovery"
-}...
-- **_placeholder**: True
-- **_note**: Simulated priors only. To make empirical: ingest SPX OHLCV + GDELT US-entity slice, rerun H1xH2, then replace this file.
 
 ## factor_backtest_metrics.json
 
@@ -246,82 +221,114 @@
 
 ## h2_predictive.json
 
-- **PREDICTIVE: closed->overnight same effective date**: {
+- **PREDICTIVE: organic_closed_signal_t -> overnight_return_t+1**: {
   "signal": "signal_organic_closed",
-  "return": "ret_overnight",
-  "mean_ic": 0.0101,
-  "t": 1.85,
-  "ndays": 1526
+  "return": "ret_overnight_next (shifted -1 per ticker)",
+  "mean_ic": -0.016311,
+  "t_stat": -2.8177,
+  "p_value": 0.0049,
+  "ndays": 1532,
+  "hit_rate_pct": 46.74,
+  "stability_pct": 31.07,
+  "bootstrap_95_ci": [
+    -0.027665,
+    -0.005629
+  ]
 }...
-- **PREDICTIVE: closed->next-day**: {
+- **PREDICTIVE: organic_open_signal_t -> intraday_return_t**: {
+  "signal": "signal_organic_open",
+  "return": "ret_intraday (same day, contemporaneous - LEAKAGE)",
+  "mean_ic": 0.017975,
+  "t_stat": 2.9202,
+  "p_value": 0.003549,
+  "ndays": 1530,
+  "hit_rate_pct": 53.4,
+  "stability_pct": 74.25,
+  "note": "CONTEMPORANEOUS - not predictive; same-day return cannot be traded on"
+}...
+- **PREDICTIVE: sponsored_closed_signal_t -> overnight_return_t+1**: {
+  "signal": "signal_sponsored_closed",
+  "return": "ret_overnight_next (shifted -1 per ticker)",
+  "mean_ic": -0.010993,
+  "t_stat": -2.2162,
+  "p_value": 0.026822,
+  "ndays": 1531,
+  "hit_rate_pct": 46.51,
+  "stability_pct": 31.35
+}...
+- **PREDICTIVE: sponsored_open_signal_t -> intraday_return_t**: {
+  "signal": "signal_sponsored_open",
+  "return": "ret_intraday (same day, contemporaneous - LEAKAGE)",
+  "mean_ic": 0.040965,
+  "t_stat": 8.1119,
+  "p_value": 0.0,
+  "ndays": 1532,
+  "hit_rate_pct": 57.77,
+  "stability_pct": 95.3,
+  "note": "CONTEMPORANEOUS - not predictive; same-day return cannot be traded on"
+}...
+- **PREDICTIVE: organic_closed_signal_t -> close2close_return_t+1**: {
   "signal": "signal_organic_closed",
-  "return": "fwd1_ret_close2close",
+  "return": "ret_fwd_1d (next trading day close-to-close)",
   "mean_ic": 0.0113,
-  "t": 2.03,
-  "ndays": 1527
+  "t_stat": 2.03,
+  "ndays": 1527,
+  "source": "from prior h2_predictive.json (needs re-verification)"
 }...
-- **PREDICTIVE: open->next-day**: {
-  "signal": "signal_organic_open",
-  "return": "fwd1_ret_close2close",
-  "mean_ic": 0.0004,
-  "t": 0.07,
-  "ndays": 1525
-}...
-- **PREDICTIVE: open->next overnight**: {
-  "signal": "signal_organic_open",
-  "return": "fwd1_ret_overnight",
-  "mean_ic": -0.0087,
-  "t": -1.48,
-  "ndays": 1524
-}...
-- **PREDICTIVE: spon-closed->overnight**: {
+- **PREDICTIVE: sponsored_closed_signal_t -> close2close_return_t+1**: {
   "signal": "signal_sponsored_closed",
-  "return": "ret_overnight",
-  "mean_ic": 0.0004,
-  "t": 0.09,
-  "ndays": 1530
-}...
-- **PREDICTIVE: spon-closed->next-day**: {
-  "signal": "signal_sponsored_closed",
-  "return": "fwd1_ret_close2close",
+  "return": "ret_fwd_1d (next trading day close-to-close)",
   "mean_ic": 0.0097,
-  "t": 2.09,
-  "ndays": 1531
+  "t_stat": 2.09,
+  "ndays": 1531,
+  "source": "from prior h2_predictive.json (needs re-verification)"
 }...
-- **PREDICTIVE: spon-open->next-day**: {
-  "signal": "signal_sponsored_open",
-  "return": "fwd1_ret_close2close",
-  "mean_ic": 0.0037,
-  "t": 0.76,
-  "ndays": 1530
+- **2x2_IC_mean_grid**: {
+  "organic_closed": -0.016311,
+  "organic_open": 0.017975,
+  "sponsored_closed": -0.010993,
+  "sponsored_open": 0.040965
 }...
-- **PREDICTIVE: spon-open->next intraday**: {
-  "signal": "signal_sponsored_open",
-  "return": "fwd1_ret_intraday",
-  "mean_ic": 0.0082,
-  "t": 1.71,
-  "ndays": 1530
+- **holdout_2024_07_plus**: {
+  "organic_closed": -0.015702,
+  "organic_open": 0.032259,
+  "sponsored_closed": -0.008341,
+  "sponsored_open": 0.039279
 }...
-- **PREDICTIVE: organic->next-day**: {
-  "signal": "organic_signal",
-  "return": "fwd1_ret_close2close",
-  "mean_ic": 0.008,
-  "t": 1.86,
-  "ndays": 1532
+- **event_study_CAR**: {
+  "bullish_day_0_pct": 0.2239,
+  "bullish_day_0_t": 6.9755,
+  "bullish_day_1_pct": 0.2617,
+  "bullish_day_1_t": 7.0273,
+  "n_bullish_events": 7394,
+  "n_bearish_events": 6956,
+  "note": "Uses abnormal returns (stock - NIFTY); window [-2, +5]; thresholds from train split (2020-2023)"
 }...
-- **PREDICTIVE: sponsored->next-day**: {
-  "signal": "sponsored_signal",
-  "return": "fwd1_ret_close2close",
-  "mean_ic": 0.006,
-  "t": 1.41,
-  "ndays": 1532
+- **regime_breakdown**: {
+  "BULL": {
+    "organic_closed": -0.034448,
+    "organic_open": 0.022149,
+    "sponsored_closed": -0.020377,
+    "sponsored_open": 0.067474
+  },
+  "BEAR": {
+    "organic_closed": 0.002767,
+    "organic_open": 0.001665,
+    "sponsored_closed": 0.008783,
+    "sponsored_open": 0.030475
+  },
+  "SIDEWAYS": {
+    "organic_closed": -0.01276,
+    "organic_open": 0.017975,
+    "sponsored_closed": -0.009818,
+    "sponsored_open": 0.034606
+  }
 }...
-- **PREDICTIVE: net->next-day**: {
-  "signal": "net_signal",
-  "return": "fwd1_ret_close2close",
-  "mean_ic": 0.0051,
-  "t": 1.19,
-  "ndays": 1532
+- **paired_difference_organic**: {
+  "mean_diff_closed_minus_open": -0.034227,
+  "t_stat": -4.0898,
+  "p_value": 4.5e-05,
+  "interpretation": "Organic closed-window IC significantly MORE NEGATIVE than organic open-window IC"
 }...
 
 ## hhee_v2_weights.json
@@ -582,11 +589,6 @@
   "attenuation_diff": -0.10360320369824216
 }...
 
-## propagation_cascades.json — **QUARANTINED (SIMULATED/PLACEHOLDER)**
-
-- List with 30 items
-  First item keys: ['cluster_id', 'ticker', 'origin_domain', 'origin_is_pr_wire', 'total_articles', 'unique_domains', 'max_cascade_depth', 'mean_propagation_delay_mins', 'tone_attenuation_ratio', 'nodes']
-
 ## propagation_measured.json
 
 - **available**: True
@@ -662,6 +664,91 @@
     "origin_is_pr_wire": false,
     "seed_tone": 0.7225702263934...
 
+## robustness_tests.json
+
+- **net_placebo**: {
+  "original_mean_ic": -0.001145,
+  "placebo_mean": 1.6e-05,
+  "placebo_std": 0.003474,
+  "p_value_twotailed": 0.6,
+  "n_permutations": 10,
+  "ci_95": [
+    -0.006935,
+    0.004319
+  ],
+  "p_value_fdr_global": 0.6
+}...
+- **organic_placebo**: {
+  "original_mean_ic": 0.005433,
+  "placebo_mean": -0.000458,
+  "placebo_std": 0.003731,
+  "p_value_twotailed": 0.2,
+  "n_permutations": 10,
+  "ci_95": [
+    -0.006205,
+    0.005472
+  ],
+  "p_value_fdr_global": 0.25
+}...
+- **sponsored_placebo**: {
+  "original_mean_ic": 0.006403,
+  "placebo_mean": -0.000325,
+  "placebo_std": 0.003263,
+  "p_value_twotailed": 0.0,
+  "n_permutations": 10,
+  "ci_95": [
+    -0.006433,
+    0.003574
+  ],
+  "p_value_fdr_global": 0.0
+}...
+- **organic_closed_placebo**: {
+  "original_mean_ic": 0.011087,
+  "placebo_mean": -0.001272,
+  "placebo_std": 0.00495,
+  "p_value_twotailed": 0.0,
+  "n_permutations": 10,
+  "ci_95": [
+    -0.009343,
+    0.005751
+  ],
+  "p_value_fdr_global": 0.0
+}...
+- **sponsored_closed_placebo**: {
+  "original_mean_ic": 0.011001,
+  "placebo_mean": 0.001841,
+  "placebo_std": 0.002949,
+  "p_value_twotailed": 0.0,
+  "n_permutations": 10,
+  "ci_95": [
+    -0.002787,
+    0.005515
+  ],
+  "p_value_fdr_global": 0.0
+}...
+- **holding_period_sweep**: {
+  "h1": {
+    "horizon_days": 1,
+    "n_days": 1532,
+    "ann_gross_return_pct": 7.74,
+    "ann_net_return_pct": -28.77,
+    "ann_vol_pct": 14.55,
+    "sharpe_gross": 0.53,
+    "sharpe_net": -1.98,
+    "max_drawdown_pct": -84.91,
+    "avg_turnover_pct": 72.45,
+    "cost_drag_pct": 0.14
+  },
+  "h2": {
+    "horizon_days": 2,
+    "n_days": 1532,
+    "ann_gross_return_pct": null,
+    "ann_net_return_pct": null,
+    "ann_vol_pct": null,
+    "sharpe_gross": 0.0,
+    "sharpe_net": 0.0,
+    "max_drawd...
+
 ## scoring_summary.json
 
 - **total_articles**: 20000
@@ -702,48 +789,48 @@
   20
 ]...
 - **mean_ic**: [
-  0.2767,
-  0.2311,
-  0.1674,
-  0.1252,
-  0.1102,
-  0.0762,
-  0.055,
-  0.0494,
-  0.0331,
-  0.0414,
-  0.0271,
-  0.0003,
-  0.0165,
-  0.0136,
-  0.0048,
-  -0.0004,
-  -0.0061,
-  0.0035,
-  -0.0002,
-  -0.0059
+  0.005,
+  0.0028,
+  0.0062,
+  0.0045,
+  -0.0005,
+  -0.0011,
+  -0.0032,
+  0.0013,
+  0.0074,
+  -0.0001,
+  0.0036,
+  -0.0003,
+  -0.0016,
+  -0.0022,
+  -0.0008,
+  0.0006,
+  0.0031,
+  -0.0019,
+  0.001,
+  0.0039
 ]...
 - **t_stats**: [
-  31.83,
-  27.67,
-  20.83,
-  21.07,
-  14.04,
-  15.66,
-  6.47,
-  8.09,
-  4.0,
-  4.38,
-  3.18,
-  0.04,
-  1.86,
-  1.6,
-  0.7,
-  -0.06,
-  -0.8,
-  0.34,
-  -0.02,
-  -0.88
+  1.16,
+  0.64,
+  1.43,
+  0.99,
+  -0.1,
+  -0.23,
+  -0.68,
+  0.29,
+  1.56,
+  -0.03,
+  0.76,
+  -0.05,
+  -0.33,
+  -0.45,
+  -0.15,
+  0.13,
+  0.63,
+  -0.37,
+  0.2,
+  0.79
 ]...
-- **estimated_half_life_days**: 2.710000
-- **peak_ic_horizon**: 1
+- **estimated_half_life_days**: 6.700000
+- **peak_ic_horizon**: 9

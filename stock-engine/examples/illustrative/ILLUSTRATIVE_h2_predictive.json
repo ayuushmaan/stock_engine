@@ -1,0 +1,79 @@
+{
+  "PREDICTIVE: closed->overnight same effective date": {
+    "signal": "signal_organic_closed",
+    "return": "ret_overnight",
+    "mean_ic": 0.0101,
+    "t": 1.85,
+    "ndays": 1526
+  },
+  "PREDICTIVE: closed->next-day": {
+    "signal": "signal_organic_closed",
+    "return": "fwd1_ret_close2close",
+    "mean_ic": 0.0113,
+    "t": 2.03,
+    "ndays": 1527
+  },
+  "PREDICTIVE: open->next-day": {
+    "signal": "signal_organic_open",
+    "return": "fwd1_ret_close2close",
+    "mean_ic": 0.0004,
+    "t": 0.07,
+    "ndays": 1525
+  },
+  "PREDICTIVE: open->next overnight": {
+    "signal": "signal_organic_open",
+    "return": "fwd1_ret_overnight",
+    "mean_ic": -0.0087,
+    "t": -1.48,
+    "ndays": 1524
+  },
+  "PREDICTIVE: spon-closed->overnight": {
+    "signal": "signal_sponsored_closed",
+    "return": "ret_overnight",
+    "mean_ic": 0.0004,
+    "t": 0.09,
+    "ndays": 1530
+  },
+  "PREDICTIVE: spon-closed->next-day": {
+    "signal": "signal_sponsored_closed",
+    "return": "fwd1_ret_close2close",
+    "mean_ic": 0.0097,
+    "t": 2.09,
+    "ndays": 1531
+  },
+  "PREDICTIVE: spon-open->next-day": {
+    "signal": "signal_sponsored_open",
+    "return": "fwd1_ret_close2close",
+    "mean_ic": 0.0037,
+    "t": 0.76,
+    "ndays": 1530
+  },
+  "PREDICTIVE: spon-open->next intraday": {
+    "signal": "signal_sponsored_open",
+    "return": "fwd1_ret_intraday",
+    "mean_ic": 0.0082,
+    "t": 1.71,
+    "ndays": 1530
+  },
+  "PREDICTIVE: organic->next-day": {
+    "signal": "organic_signal",
+    "return": "fwd1_ret_close2close",
+    "mean_ic": 0.008,
+    "t": 1.86,
+    "ndays": 1532
+  },
+  "PREDICTIVE: sponsored->next-day": {
+    "signal": "sponsored_signal",
+    "return": "fwd1_ret_close2close",
+    "mean_ic": 0.006,
+    "t": 1.41,
+    "ndays": 1532
+  },
+  "PREDICTIVE: net->next-day": {
+    "signal": "net_signal",
+    "return": "fwd1_ret_close2close",
+    "mean_ic": 0.0051,
+    "t": 1.19,
+    "ndays": 1532
+  }
+}

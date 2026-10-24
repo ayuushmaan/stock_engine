@@ -102,9 +102,7 @@ def plot_decay_curve(decay_results: Dict[str, Any], save_path: Path):
 
 def run_decay_analysis():
     """Execute signal decay research module."""
-    master_path = DATA_FINAL / "master_panel.parquet"
-    if not master_path.exists():
-        master_path = DATA_PROCESSED / "sponsored_scores.parquet"
+    master_path = DATA_FINAL / "master_dataset.parquet"
 
     if master_path.exists():
         df = pd.read_parquet(master_path)
@@ -113,7 +111,9 @@ def run_decay_analysis():
             f"Master panel not found at {master_path}. Refusing to synthesize decay data."
         )
 
-    decay_results = compute_decay_curve(df, signal_col="pred_score" if "pred_score" in df.columns else "tone_score")
+    # Use net_signal as the composite signal (organic - sponsored), or fallback
+    signal_col = "net_signal" if "net_signal" in df.columns else ("pred_score" if "pred_score" in df.columns else "tone_score")
+    decay_results = compute_decay_curve(df, signal_col=signal_col)
 
     out_json = OUTPUTS_TABLES / "signal_decay_analysis.json"
     out_json.parent.mkdir(parents=True, exist_ok=True)

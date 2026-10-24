@@ -33,6 +33,14 @@ jobs:
       run: |
         python pipeline/check_circularity.py
 
+    - name: Check for Placeholder/Simulated Content in outputs/tables
+      run: |
+        python pipeline/check_outputs.py
+
+    - name: Regenerate RESULTS.md from outputs/tables
+      run: |
+        python pipeline/gen_results_md.py
+
     - name: Run Test Suite
       run: |
         pytest tests/ -v --junitxml=pytest-report.xml
