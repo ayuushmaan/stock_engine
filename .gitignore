@@ -1,7 +1,7 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-*$py.class
+*.class
 
 # Virtual environments
 .venv/
@@ -58,3 +58,13 @@ logs/
 *.tmp
 *.temp
 scratch/
+
+# Other projects (separate repos)
+Credit card/
+Fifa Sentiment Analysis/
+TFM/
+TFM2.0/
+TFM3.0/
+TFM4.0/
+TSFM1.0/
+miniproject/
