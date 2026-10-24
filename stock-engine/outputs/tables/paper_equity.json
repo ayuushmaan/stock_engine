@@ -1,0 +1,10 @@
+{
+  "bankroll_start": 1000000.0,
+  "currency": "VIRTUAL-INR (fake)",
+  "curve": [
+    {
+      "date": "2020-02-03",
+      "virtual_value": 1005687.46
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "PREDICTIVE: organic_closed_signal_t -> overnight_return_t+1": {
+    "signal": "signal_organic_closed",
+    "return": "ret_overnight_next (shifted -1 per ticker)",
+    "mean_ic": -0.016311,
+    "t_stat": -2.8177,
+    "p_value": 0.0049,
+    "ndays": 1532,
+    "hit_rate_pct": 46.74,
+    "stability_pct": 31.07,
+    "bootstrap_95_ci": [-0.027665, -0.005629]
+  },
+  "PREDICTIVE: organic_open_signal_t -> intraday_return_t": {
+    "signal": "signal_organic_open",
+    "return": "ret_intraday (same day, contemporaneous - LEAKAGE)",
+    "mean_ic": 0.017975,
+    "t_stat": 2.9202,
+    "p_value": 0.003549,
+    "ndays": 1530,
+    "hit_rate_pct": 53.40,
+    "stability_pct": 74.25,
+    "note": "CONTEMPORANEOUS - not predictive; same-day return cannot be traded on"
+  },
+  "PREDICTIVE: sponsored_closed_signal_t -> overnight_return_t+1": {
+    "signal": "signal_sponsored_closed",
+    "return": "ret_overnight_next (shifted -1 per ticker)",
+    "mean_ic": -0.010993,
+    "t_stat": -2.2162,
+    "p_value": 0.026822,
+    "ndays": 1531,
+    "hit_rate_pct": 46.51,
+    "stability_pct": 31.35
+  },
+  "PREDICTIVE: sponsored_open_signal_t -> intraday_return_t": {
+    "signal": "signal_sponsored_open",
+    "return": "ret_intraday (same day, contemporaneous - LEAKAGE)",
+    "mean_ic": 0.040965,
+    "t_stat": 8.1119,
+    "p_value": 0.0,
+    "ndays": 1532,
+    "hit_rate_pct": 57.77,
+    "stability_pct": 95.30,
+    "note": "CONTEMPORANEOUS - not predictive; same-day return cannot be traded on"
+  },
+  "PREDICTIVE: organic_closed_signal_t -> close2close_return_t+1": {
+    "signal": "signal_organic_closed",
+    "return": "ret_fwd_1d (next trading day close-to-close)",
+    "mean_ic": 0.0113,
+    "t_stat": 2.03,
+    "ndays": 1527,
+    "source": "from prior h2_predictive.json (needs re-verification)"
+  },
+  "PREDICTIVE: sponsored_closed_signal_t -> close2close_return_t+1": {
+    "signal": "signal_sponsored_closed",
+    "return": "ret_fwd_1d (next trading day close-to-close)",
+    "mean_ic": 0.0097,
+    "t_stat": 2.09,
+    "ndays": 1531,
+    "source": "from prior h2_predictive.json (needs re-verification)"
+  },
+  "2x2_IC_mean_grid": {
+    "organic_closed": -0.016311,
+    "organic_open": 0.017975,
+    "sponsored_closed": -0.010993,
+    "sponsored_open": 0.040965
+  },
+  "holdout_2024_07_plus": {
+    "organic_closed": -0.015702,
+    "organic_open": 0.032259,
+    "sponsored_closed": -0.008341,
+    "sponsored_open": 0.039279
+  },
+  "event_study_CAR": {
+    "bullish_day_0_pct": 0.2239,
+    "bullish_day_0_t": 6.9755,
+    "bullish_day_1_pct": 0.2617,
+    "bullish_day_1_t": 7.0273,
+    "n_bullish_events": 7394,
+    "n_bearish_events": 6956,
+    "note": "Uses abnormal returns (stock - NIFTY); window [-2, +5]; thresholds from train split (2020-2023)"
+  },
+  "regime_breakdown": {
+    "BULL": {"organic_closed": -0.034448, "organic_open": 0.022149, "sponsored_closed": -0.020377, "sponsored_open": 0.067474},
+    "BEAR": {"organic_closed": 0.002767, "organic_open": 0.001665, "sponsored_closed": 0.008783, "sponsored_open": 0.030475},
+    "SIDEWAYS": {"organic_closed": -0.012760, "organic_open": 0.017975, "sponsored_closed": -0.009818, "sponsored_open": 0.034606}
+  },
+  "paired_difference_organic": {
+    "mean_diff_closed_minus_open": -0.034227,
+    "t_stat": -4.0898,
+    "p_value": 0.000045,
+    "interpretation": "Organic closed-window IC significantly MORE NEGATIVE than organic open-window IC"
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "available": true,
+  "n_ticker_days": 66595,
+  "n_cascade_days_ge3": 53608,
+  "n_multi_domain_days": 47814,
+  "median_domains_per_cascade_day": 7.0,
+  "median_tone_range": 6.70586416182206,
+  "mean_pr_wire_share": 0.07268927522056663,
+  "top_cascade_days": [
+    {
+      "ticker": "ADANIENT.NS",
+      "effective_date": "2022-08-24",
+      "n_articles": 234,
+      "n_domains": 87,
+      "tone_mean": 0.2301829418864015,
+      "tone_range": 10.64467766116941,
+      "pr_wire_share": 0.004273504273504274
+    },
+    {
+      "ticker": "ADANIENT.NS",
+      "effective_date": "2022-08-25",
+      "n_articles": 173,
+      "n_domains": 67,
+      "tone_mean": 0.5062590112725858,
+      "tone_range": 11.296116504854371,
+      "pr_wire_share": 0.0
+    },
+    {
+      "ticker": "COALINDIA.NS",
+      "effective_date": "2023-05-08",
+      "n_articles": 375,
+      "n_domains": 61,
+      "tone_mean": -0.725952395419392,
+      "tone_range": 23.314464710742797,
+      "pr_wire_share": 0.06666666666666667
+    },
+    {
+      "ticker": "COALINDIA.NS",
+      "effective_date": "2020-03-23",
+      "n_articles": 751,
+      "n_domains": 60,
+      "tone_mean": -1.921081318321367,
+      "tone_range": 16.69287292533787,
+      "pr_wire_share": 0.037283621837549935
+    },
+    {
+      "ticker": "COALINDIA.NS",
+      "effective_date": "2020-05-11",
+      "n_articles": 459,
+      "n_domains": 58,
+      "tone_mean": -1.243452178921029,
+      "tone_range": 20.20556856622433,
+      "pr_wire_share": 0.037037037037037035
+    },
+    {
+      "ticker": "COALINDIA.NS",
+      "effective_date": "2020-06-29",
+      "n_articles": 379,
+      "n_domains": 58,
+      "tone_mean": -0.9291979888323494,
+      "tone_range": 27.7097116719758,
+      "pr_wire_share": 0.11873350923482849
+    },
+    {
+      "ticker": "COALINDIA.NS",
+      "effective_date": "2020-07-06",
+      "n_articles": 438,
+      "n_domains": 58,
+      "tone_mean": -1.4059390622201735,
+      "tone_range": 15.5988455988456,
+      "pr_wire_share": 0.0365296803652968
+    },
+    {
+      "ticker": "RELIANCE.NS",
+      "effective_date": "2023-04-03",
+      "n_articles": 668,
+      "n_domains": 57,
+      "tone_mean": 0.9204133001991235,
+      "tone_range": 22.4304904717276,
+      "pr_wire_share": 0.07934131736526946
+    },
+    {
+      "ticker": "COALINDIA.NS",
+      "effective_date": "2020-02-24",
+      "n_articles": 314,
+      "n_domains": 56,
+      "tone_mean": -0.3470986799326588,
+      "tone_range": 25.573595177911713,
+      "pr_wire_share": 0.1337579617834395
+    },
+    {
+      "ticker": "COALINDIA.NS",
+      "effective_date": "2023-05-29",
+      "n_articles": 421,
+      "n_domains": 56,
+      "tone_mean": -0.09720983853356903,
+      "tone_range": 19.17900947685348,
+      "pr_wire_share": 0.04513064133016627
+    }
+  ]
+}

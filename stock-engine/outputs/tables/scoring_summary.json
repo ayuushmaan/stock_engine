@@ -1,0 +1,14 @@
+{
+  "total_articles": 20000,
+  "n_sponsored": 999,
+  "n_organic": 19001,
+  "n_unclear_abstain": 0,
+  "pct_sponsored": 5.0,
+  "pct_organic": 95.0,
+  "pct_unclear": 0.0,
+  "effective_coverage_pct": 100.0,
+  "tau_low": 0.3,
+  "tau_high": 0.7,
+  "mean_score": 0.2523,
+  "median_score": 0.2142
+}

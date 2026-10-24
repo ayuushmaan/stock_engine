@@ -1,0 +1,111 @@
+{
+  "phase": "0.2",
+  "description": "Honest evaluation on hand-labeled ground truth",
+  "mock_mode": false,
+  "run_timestamp": "2026-09-20T17:39:29.221496",
+  "excluded_features": [
+    "source_tier",
+    "tone_score",
+    "positive_score",
+    "negative_score",
+    "p_n_ratio",
+    "is_pr_wire",
+    "has_promo_ratio",
+    "has_risk_words"
+  ],
+  "used_features": [
+    "tone_30d_variance",
+    "cross_seed_count",
+    "mention_burst_score",
+    "word_count",
+    "polarity"
+  ],
+  "metrics": {
+    "honest_auc": 0.7046,
+    "honest_ap": 0.3183,
+    "n_eval": 200,
+    "n_sponsored": 34,
+    "n_organic": 166,
+    "confusion_matrix": [
+      [
+        92,
+        74
+      ],
+      [
+        6,
+        28
+      ]
+    ],
+    "accuracy": 0.6,
+    "y_prob_mean": 0.5109,
+    "y_prob_std": 0.3083,
+    "classification_report": {
+      "organic": {
+        "precision": 0.9387755102040817,
+        "recall": 0.5542168674698795,
+        "f1-score": 0.696969696969697,
+        "support": 166.0
+      },
+      "sponsored": {
+        "precision": 0.27450980392156865,
+        "recall": 0.8235294117647058,
+        "f1-score": 0.4117647058823529,
+        "support": 34.0
+      },
+      "accuracy": 0.6,
+      "macro avg": {
+        "precision": 0.6066426570628252,
+        "recall": 0.6888731396172927,
+        "f1-score": 0.554367201426025,
+        "support": 200.0
+      },
+      "weighted avg": {
+        "precision": 0.8258503401360545,
+        "recall": 0.6,
+        "f1-score": 0.6484848484848484,
+        "support": 200.0
+      }
+    },
+    "gate_0_decision": {
+      "auc": 0.7046,
+      "tier": "WEAK",
+      "interpretation": "Weak signal, needs text features",
+      "recommendation": "Proceed, but H1 depends on Phase 2. Text-based features (NLP on article body) are now mandatory, not optional."
+    },
+    "honest_feature_importance": [
+      {
+        "feature": "tone_30d_variance",
+        "gain": 28958.783081829548,
+        "pct": 29.61870184160664
+      },
+      {
+        "feature": "word_count",
+        "gain": 25834.271807670593,
+        "pct": 26.422988555984496
+      },
+      {
+        "feature": "polarity",
+        "gain": 20203.584812939167,
+        "pct": 20.663988297268308
+      },
+      {
+        "feature": "mention_burst_score",
+        "gain": 11990.91874152422,
+        "pct": 12.264170286733648
+      },
+      {
+        "feature": "cross_seed_count",
+        "gain": 10784.394009232521,
+        "pct": 11.030151018406908
+      }
+    ]
+  },
+  "gate_0_decision": {
+    "auc": 0.7046,
+    "tier": "WEAK",
+    "interpretation": "Weak signal, needs text features",
+    "recommendation": "Proceed, but H1 depends on Phase 2. Text-based features (NLP on article body) are now mandatory, not optional."
+  },
+  "python_version": "3.11.7",
+  "dataset_hash": "cf9769409a24d55c"
+}

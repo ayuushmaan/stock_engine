@@ -54,30 +54,7 @@ ci: test report
 # Quick demo with sample data (runs in ~30 seconds)
 demo:
 	@echo "=== NIFTY 50 News-Signal Demo ==="
-	@echo "Using sample data in data/raw/ and data/final/sample_master_dataset.parquet"
-	python -c "
-import pandas as pd
-import numpy as np
-from scipy import stats
-
-df = pd.read_parquet('data/final/sample_master_dataset.parquet')
-df = df.dropna(subset=['net_signal', 'ret_fwd_1d'])
-df = df[df['article_count_total'] >= 3]
-
-# Daily IC
-daily_ics = []
-for d in df['date'].unique():
-    g = df[df['date'] == d]
-    valid = g[['net_signal', 'ret_fwd_1d']].notna().all(axis=1)
-    if valid.sum() >= 5:
-        ic, _ = stats.spearmanr(g.loc[valid, 'net_signal'], g.loc[valid, 'ret_fwd_1d'])
-        daily_ics.append(ic)
-
-daily_ics = np.array(daily_ics)
-mean_ic = np.nanmean(daily_ics)
-print(f'Sample IC: {mean_ic:.4f} over {len(daily_ics)} days')
-print('Demo complete. Run make data for full pipeline with real data.')
-"
+	python scripts/demo.py
 
 # Clean generated artifacts
 clean:

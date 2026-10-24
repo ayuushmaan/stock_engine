@@ -1,0 +1,28 @@
+{
+  "version": "hhee_v2_text_only",
+  "n": 149,
+  "C": 2.0,
+  "cv_auc_stable": 0.6876,
+  "cv_auc_unregularized": 0.7776,
+  "weights": {
+    "promo_density": 0.99,
+    "cta_density": 0.234,
+    "boilerplate_ratio": 2.17,
+    "headline_hype": 0.881,
+    "risk_absence": -0.366,
+    "quote_monopoly": -1.255
+  },
+  "bias": -0.692,
+  "unregularized_rejected": {
+    "promo_density": 14.095,
+    "cta_density": 132.643,
+    "boilerplate_ratio": 4.085,
+    "headline_hype": 2.131,
+    "risk_absence": -3.564,
+    "quote_monopoly": -1.382,
+    "bias": 1.971
+  },
+  "honest_metadata_auc": 0.7046,
+  "full_with_layer0_auc": 0.9579,
+  "note": "text-only matches metadata; domain gates dominate; cta rare-feature overfit rejected"
+}

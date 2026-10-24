@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
 TABLES_DIR = Path("outputs/tables")
@@ -19,6 +20,11 @@ def main():
         print("ERROR: outputs/tables not found")
         return 1
 
+    json_files = sorted(TABLES_DIR.glob("*.json"))
+    if not json_files:
+        print("ERROR: No JSON files found in outputs/tables/")
+        return 1
+
     lines = [
         "# Auto-Generated Results from outputs/tables/",
         "",
@@ -29,12 +35,8 @@ def main():
         "",
     ]
 
-    json_files = sorted(TABLES_DIR.glob("*.json"))
     for jf in json_files:
-        if jf.name in ("cross_market_replication.json", "propagation_cascades.json"):
-            lines.append(f"## {jf.name} — **QUARANTINED (SIMULATED/PLACEHOLDER)**")
-        else:
-            lines.append(f"## {jf.name}")
+        lines.append(f"## {jf.name}")
         lines.append("")
 
         try:
@@ -65,4 +67,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

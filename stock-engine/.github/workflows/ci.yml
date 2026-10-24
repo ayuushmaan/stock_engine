@@ -41,6 +41,15 @@ jobs:
       run: |
         python pipeline/gen_results_md.py
 
+    - name: Verify RESULTS.md matches committed version
+      run: |
+        if ! git diff --quiet RESULTS.md; then
+          echo "ERROR: RESULTS.md differs from committed version."
+          echo "Run 'python pipeline/gen_results_md.py' locally and commit the changes."
+          git diff RESULTS.md
+          exit 1
+        fi
+
     - name: Run Test Suite
       run: |
         pytest tests/ -v --junitxml=pytest-report.xml

@@ -1,0 +1,44 @@
+{
+  "available": true,
+  "total_cascades": 55865,
+  "pr_wire_origin": {
+    "label": "PR-wire origin",
+    "n": 3498,
+    "mean_latency_mins": 477.98955935701485,
+    "latency_ci95": [
+      467.71994623040433,
+      487.98289701764827
+    ],
+    "median_latency_mins": 270.0,
+    "mean_attenuation": 0.3948981409820588,
+    "attenuation_ci95": [
+      0.2876184135874143,
+      0.5102313636312552
+    ],
+    "median_attenuation": 0.46604702487055427,
+    "hop1_latency": 178.54629362561292,
+    "hop2_latency": 383.1083620419668
+  },
+  "editorial_origin": {
+    "label": "Editorial origin",
+    "n": 52367,
+    "mean_latency_mins": 472.6239414554377,
+    "latency_ci95": [
+      470.09381338078157,
+      475.11606102171976
+    ],
+    "median_latency_mins": 240.0,
+    "mean_attenuation": 0.49850134468030094,
+    "attenuation_ci95": [
+      0.45267925437657924,
+      0.541198398243406
+    ],
+    "median_attenuation": 0.5742088482622718,
+    "hop1_latency": 197.14260956635601,
+    "hop2_latency": 339.0616950297707
+  },
+  "comparison": {
+    "latency_diff_mins": 5.365617901577139,
+    "attenuation_diff": -0.10360320369824216
+  }
+}
